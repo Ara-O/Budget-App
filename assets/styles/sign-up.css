@@ -1,0 +1,106 @@
+body{
+    background: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px
+}
+
+
+.sign-up-main {
+    display: flex;
+    justify-content: center;align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: none;
+    column-gap: 200px;
+}
+
+.main-section {
+    background: linear-gradient(211deg, #468C5F, #1c452a);
+    height: 589px;
+    width: 1179px;
+    border-radius: 16px;
+    display: flex;
+    box-shadow: 0px 0px 2px grey;
+    justify-content: right;
+    position: relative;
+    /* z-index: 1; */
+
+}
+
+.stacked-coin{
+    position: absolute;
+    left: 142px;
+    width: 480px;
+    bottom: -72px;
+}
+
+.coin-1{
+    position: absolute;
+    width: 150px;
+    left: 43px;
+    top: 39px;
+    transform: rotate(337deg);
+}
+
+.coin-2{
+    position: absolute;
+    right: 104px;
+    width: 121px;
+    bottom: -55px;
+}
+
+.signup-section{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 600px;
+    flex-direction: column;
+    color: white;
+}
+
+.signup-section label {
+    font-weight: 300;
+    font-size: 15px
+}
+
+.signup-section_title{
+    font-size: 32px;
+    font-weight: 500;
+}
+.form-input{
+    height: 38px;
+    width: 313px;
+    border-radius: 5px;
+    border: solid 0px;
+    padding: 3px 18px;
+    font-family: 'Poppins';
+}
+
+.already-have-account{
+    text-decoration: underline;
+    font-weight: 300;
+    cursor: pointer
+}
+
+.sign-up-btn{
+    background-color: #203D2A;
+    border: none;
+    height: 46px;
+    font-weight: 300;
+    font-size: 12.5px;
+    width: 113px;
+    color: white;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    /* box-shadow: 0px 0px 2px black; */
+    cursor: pointer;
+    transition: all 250ms linear;
+    z-index: 2;
+}
+
+.sign-up-btn:hover{
+    background-color: #1b3223;
+}
