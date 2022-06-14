@@ -9,7 +9,7 @@
       <img src="~/assets/images/coin.png" class="coin-1" alt="Stacked coin" />
       <img src="~/assets/images/coin.png" class="coin-2" alt="Stacked coin 2" />
       <section class="signup-section">
-        <h3 class="signup-section_title">Start saving money!</h3>
+        <h3 class="signup-section_title">Log in!</h3>
         <label for="email">Email Address: </label> <br />
         <input type="text" name="" id="email" ref="email" class="form-input" value="oladipoara@gmail.com"/>
         <br />
@@ -21,7 +21,7 @@
           class="form-input"
           value="vrewepnqpwe"
         />
-        <NuxtLink to="/login"><h5 class="already-have-account">I already have an account</h5></NuxtLink>
+        <h5 class="already-have-account">I don't have an account</h5>
         <button class="sign-up-btn" type="submit" @click="registerUser">
           Sign Up
         </button>
@@ -37,12 +37,11 @@
 </style>
 
 <script>
-import { registerUser } from '../modules/firebaseServices';
+import { logInUser } from '../modules/firebaseServices';
 export default {
-  transition: "sign-up",
   head() {
     return {
-      title: "Sign Up",
+      title: "Log In",
     };
   },
 
@@ -64,13 +63,13 @@ export default {
      return this.missingField === true ? false : true;
     },
 
-    registerUser() {
+    logInUser() {
       let email = this.$refs.email.value;
       let password = this.$refs.password.value;
       this.missingField = false;
       if(this.validateEntry(email, password)){
         console.log("Entry valid");
-        registerUser(email, password)
+        logInUser(email, password)
       }
     },
   },

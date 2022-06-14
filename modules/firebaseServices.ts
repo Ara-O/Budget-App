@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged,createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.apiKey,
@@ -30,15 +30,30 @@ export async function userIsSignedIn() {
     return dataReceived
 }
 
-export async function registerUser(email, password){
+export async function registerUser(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-      console.log(user)
-    })
-    .catch((error) => {
-      alert(error.message)
-    });
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
+            console.log(user)
+        })
+        .catch((error) => {
+            alert(error.message)
+        });
+}
+
+export async function logInUser(email, password) {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user)
+            // ...
+        })
+        .catch((error) => {
+            // const errorCode = error.code;
+            // const errorMessage = error.message;
+            alert(error)
+        });
 }

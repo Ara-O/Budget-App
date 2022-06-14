@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.registerUser = exports.userIsSignedIn = void 0;
+exports.logInUser = exports.registerUser = exports.userIsSignedIn = void 0;
 var app_1 = require("firebase/app");
 var auth_1 = require("firebase/auth");
 var firebaseConfig = {
@@ -93,3 +93,22 @@ function registerUser(email, password) {
     });
 }
 exports.registerUser = registerUser;
+function logInUser(email, password) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            (0, auth_1.signInWithEmailAndPassword)(auth, email, password)
+                .then(function (userCredential) {
+                // Signed in
+                var user = userCredential.user;
+                console.log(user);
+                // ...
+            })["catch"](function (error) {
+                // const errorCode = error.code;
+                // const errorMessage = error.message;
+                alert(error);
+            });
+            return [2 /*return*/];
+        });
+    });
+}
+exports.logInUser = logInUser;

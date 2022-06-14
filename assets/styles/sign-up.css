@@ -4,7 +4,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0px
+    margin: 0px;
+    overflow: hidden
 }
 
 
@@ -59,6 +60,7 @@ body{
     width: 600px;
     flex-direction: column;
     color: white;
+    z-index: 2;
 }
 
 .signup-section label {
@@ -82,7 +84,8 @@ body{
 .already-have-account{
     text-decoration: underline;
     font-weight: 300;
-    cursor: pointer
+    cursor: pointer;
+    color: white
 }
 
 .sign-up-btn{
@@ -104,3 +107,6 @@ body{
 .sign-up-btn:hover{
     background-color: #1b3223;
 }
+
+.sign-up-enter-active, .sign-up-leave-active { transition: opacity .5s; }
+.sign-up-enter, .sign-up-leave-active { opacity: 0; }
