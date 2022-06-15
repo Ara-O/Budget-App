@@ -78,36 +78,49 @@ function userIsSignedIn() {
 exports.userIsSignedIn = userIsSignedIn;
 function registerUser(email, password) {
     return __awaiter(this, void 0, void 0, function () {
+        var promiseregisteruser, awaitregister;
         return __generator(this, function (_a) {
-            (0, auth_1.createUserWithEmailAndPassword)(auth, email, password)
-                .then(function (userCredential) {
-                // Signed in
-                var user = userCredential.user;
-                // ...
-                console.log(user);
-            })["catch"](function (error) {
-                alert(error.message);
-            });
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    promiseregisteruser = new Promise(function (resolve, reject) {
+                        (0, auth_1.createUserWithEmailAndPassword)(auth, email, password)
+                            .then(function (userCredential) {
+                            // Signed up
+                            var user = userCredential.user;
+                            resolve(user);
+                        })["catch"](function (error) {
+                            reject(error.message);
+                        });
+                    });
+                    return [4 /*yield*/, promiseregisteruser];
+                case 1:
+                    awaitregister = _a.sent();
+                    return [2 /*return*/, awaitregister];
+            }
         });
     });
 }
 exports.registerUser = registerUser;
 function logInUser(email, password) {
     return __awaiter(this, void 0, void 0, function () {
+        var promiseloginuser, awaitloginuser;
         return __generator(this, function (_a) {
-            (0, auth_1.signInWithEmailAndPassword)(auth, email, password)
-                .then(function (userCredential) {
-                // Signed in
-                var user = userCredential.user;
-                console.log(user);
-                // ...
-            })["catch"](function (error) {
-                // const errorCode = error.code;
-                // const errorMessage = error.message;
-                alert(error);
-            });
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    promiseloginuser = new Promise(function (resolve, reject) {
+                        (0, auth_1.signInWithEmailAndPassword)(auth, email, password).then(function (userCredential) {
+                            // Signed in
+                            var user = userCredential.user;
+                            resolve(user);
+                        })["catch"](function (error) {
+                            reject(error.message);
+                        });
+                    });
+                    return [4 /*yield*/, promiseloginuser];
+                case 1:
+                    awaitloginuser = _a.sent();
+                    return [2 /*return*/, awaitloginuser];
+            }
         });
     });
 }

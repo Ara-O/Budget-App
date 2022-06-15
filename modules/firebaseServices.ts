@@ -31,29 +31,36 @@ export async function userIsSignedIn() {
 }
 
 export async function registerUser(email, password) {
-    createUserWithEmailAndPassword(auth, email, password)
+    let promiseregisteruser = new Promise((resolve, reject) => {
+        createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            // ...
-            console.log(user)
+            // Signed up
+            const user = userCredential.user
+            resolve(user)
         })
         .catch((error) => {
-            alert(error.message)
+            reject(error.message)
         });
+    })
+
+    let awaitregister = await promiseregisteruser;
+
+    return awaitregister
 }
 
 export async function logInUser(email, password) {
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user)
-            // ...
+   let promiseloginuser = new Promise((resolve, reject) => {
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+           // Signed in
+           const user = userCredential.user;
+           resolve(user)
         })
         .catch((error) => {
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
-            alert(error)
+            reject(error.message)
         });
+    })
+    
+    let awaitloginuser = await promiseloginuser;
+
+    return awaitloginuser
 }

@@ -107,6 +107,6 @@ body{
 .sign-up-btn:hover{
     background-color: #1b3223;
 }
-
-.sign-up-enter-active, .sign-up-leave-active { transition: opacity .5s; }
-.sign-up-enter, .sign-up-leave-active { opacity: 0; }
+/* 
+.sign-up-enter-active, .sign-up-leave-active { transition: all 350ms; }
+.sign-up-enter, .sign-up-leave-active { opacity: 0.9; filter: blur(3px); } */

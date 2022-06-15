@@ -11,7 +11,14 @@
       <section class="signup-section">
         <h3 class="signup-section_title">Start saving money!</h3>
         <label for="email">Email Address: </label> <br />
-        <input type="text" name="" id="email" ref="email" class="form-input" value="oladipoara@gmail.com"/>
+        <input
+          type="text"
+          name=""
+          id="email"
+          ref="email"
+          class="form-input"
+          value="oladipoara@gmail.com"
+        />
         <br />
         <label for="password">Password: </label> <br />
         <input
@@ -21,11 +28,17 @@
           class="form-input"
           value="vrewepnqpwe"
         />
-        <NuxtLink to="/login"><h5 class="already-have-account">I already have an account</h5></NuxtLink>
+        <NuxtLink to="/login"
+          ><h5 class="already-have-account">
+            I already have an account
+          </h5></NuxtLink
+        >
         <button class="sign-up-btn" type="submit" @click="registerUser">
           Sign Up
         </button>
-        <h5 v-if="missingField" style="font-weight: 300">There is one or more missing fields...</h5>
+        <h5 v-if="missingField" style="font-weight: 300">
+          There is one or more missing fields...
+        </h5>
       </section>
     </section>
   </main>
@@ -37,40 +50,45 @@
 </style>
 
 <script>
-import { registerUser } from '../modules/firebaseServices';
+import { registerUser as registerUserFirebase } from "../modules/firebaseServices";
 export default {
-  transition: "sign-up",
+  // transition: "sign-up",
   head() {
     return {
       title: "Sign Up",
     };
   },
 
-  data(){
+  data() {
     return {
       missingField: false,
-    }
+    };
   },
 
   methods: {
-    validateEntry(...allFields){
-      allFields.forEach((el)=> {
-        if(el.trim()=== ''){
-          console.log("emtpy")
+    validateEntry(...allFields) {
+      allFields.forEach((el) => {
+        if (el.trim() === "") {
           this.missingField = true;
-        } 
+        }
       });
 
-     return this.missingField === true ? false : true;
+      return this.missingField === true ? false : true;
     },
 
     registerUser() {
       let email = this.$refs.email.value;
       let password = this.$refs.password.value;
       this.missingField = false;
-      if(this.validateEntry(email, password)){
-        console.log("Entry valid");
-        registerUser(email, password)
+      if (this.validateEntry(email, password)) {
+        registerUserFirebase(email, password)
+          .then((user) => {
+            this.$router.push("/")
+            console.log(user);
+          })
+          .catch((err) => {
+            alert(err);
+          });
       }
     },
   },

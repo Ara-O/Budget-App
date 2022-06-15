@@ -21,8 +21,8 @@
           class="form-input"
           value="vrewepnqpwe"
         />
-        <h5 class="already-have-account">I don't have an account</h5>
-        <button class="sign-up-btn" type="submit" @click="registerUser">
+       <NuxtLink to="/signup"><h5 class="already-have-account">I don't have an account</h5></NuxtLink> 
+        <button class="sign-up-btn" type="submit" @click="logInUser">
           Sign Up
         </button>
         <h5 v-if="missingField" style="font-weight: 300">There is one or more missing fields...</h5>
@@ -37,7 +37,7 @@
 </style>
 
 <script>
-import { logInUser } from '../modules/firebaseServices';
+import { logInUser as logInUserFirebase } from '../modules/firebaseServices';
 export default {
   head() {
     return {
@@ -68,8 +68,9 @@ export default {
       let password = this.$refs.password.value;
       this.missingField = false;
       if(this.validateEntry(email, password)){
-        console.log("Entry valid");
-        logInUser(email, password)
+        logInUserFirebase(email, password).then((user)=> {
+          this.$router.push("/")
+        }).catch((err) => alert(err))
       }
     },
   },

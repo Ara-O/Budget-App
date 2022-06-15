@@ -1,5 +1,7 @@
 <template>
-<h3>Bah</h3>
+<main class="index-main" v-if="userIsSignedIn">
+  <h3>Hello</h3>
+</main>
 </template>
 
 <script lang="ts">
@@ -10,11 +12,16 @@ export default Vue.extend({
     return {
       title: "Save Money!"
     }
-  },  
+  }, 
+  data(){
+    return {
+      userIsSignedIn: false,
+    }
+  },
   mounted(){
       userIsSignedIn().then((res)=> {
         if(res){
-          alert("user is signed in")
+          this.userIsSignedIn = true;
         }else {
           this.$router.push("/signup")
         }
