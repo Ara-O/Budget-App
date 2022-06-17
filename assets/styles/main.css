@@ -1,0 +1,67 @@
+html {
+    background-color: #F2F5F7;
+    padding: 3vh 3vh;
+    overflow: hidden
+}
+
+.index-main{
+    display: flex;
+    column-gap: 3vh;
+    height: 94vh;
+}
+
+body {
+    margin: 0px;
+}
+
+.main-section_left {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3vh;
+    font-size: 0.7rem
+}
+
+.income-section,
+.bill-section {
+    flex: 3
+}
+
+.income-section,
+.bill-section,
+.total-income-section {
+    background: white;
+    width: 47vh;
+    display: inline-block;
+    border-radius: 5px;
+    box-shadow: 0px 0px 1px #bfbfbf;
+}
+
+.total-income-section {
+    flex: 1
+}
+
+.main-section_right{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3vh;
+    font-size: 0.7rem
+}
+
+.graph-section, .expense-section{
+    background: white;
+    display: inline-block;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 1px #bfbfbf;
+}
+
+.graph-section{
+    height: 100%;
+    flex: 3.5;
+}
+
+.expense-section {
+   height: 100%;
+   flex: 5
+}
