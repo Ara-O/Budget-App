@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: process.env.apiKey,
@@ -19,7 +20,7 @@ export async function userIsSignedIn() {
     let getInfo = new Promise((resolve, reject) => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                resolve(true)
+                resolve(user)
             } else {
                 reject("User not found")
             }
@@ -31,36 +32,33 @@ export async function userIsSignedIn() {
 }
 
 export async function registerUser(email, password) {
-    let promiseregisteruser = new Promise((resolve, reject) => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed up
-            const user = userCredential.user
-            resolve(user)
-        })
-        .catch((error) => {
-            reject(error.message)
-        });
-    })
+    try {
+        //await returns the fulfilled value of the promise;
+        let userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log(userCredential)
+    } catch (err) {
+        alert(err)
+    }
 
-    let awaitregister = await promiseregisteruser;
-
-    return awaitregister
 }
 
 export async function logInUser(email, password) {
-   let promiseloginuser = new Promise((resolve, reject) => {
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-           // Signed in
-           const user = userCredential.user;
-           resolve(user)
-        })
-        .catch((error) => {
-            reject(error.message)
-        });
-    })
-    
-    let awaitloginuser = await promiseloginuser;
+    try {
+        let userCredential = await signInWithEmailAndPassword(auth, email, password)
+        const user = userCredential.user;
 
-    return awaitloginuser
+    } catch (error) {
+        alert(error)
+    }
+
+
+}
+
+export async function addIncome(email, password) {
+    //! First get user ID!
+    // const db = getDatabase();
+    // set(ref(db, 'users/' + userId), {
+    //   password: name,
+    //   email: email,
+    // });
 }

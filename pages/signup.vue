@@ -51,6 +51,7 @@
 
 <script>
 import { registerUser as registerUserFirebase } from "../modules/firebaseServices";
+import {validateEntries} from "../modules/utilities.js"
 export default {
   // transition: "sign-up",
   head() {
@@ -66,29 +67,12 @@ export default {
   },
 
   methods: {
-    validateEntry(...allFields) {
-      allFields.forEach((el) => {
-        if (el.trim() === "") {
-          this.missingField = true;
-        }
-      });
-
-      return this.missingField === true ? false : true;
-    },
-
     registerUser() {
       let email = this.$refs.email.value;
       let password = this.$refs.password.value;
       this.missingField = false;
-      if (this.validateEntry(email, password)) {
-        registerUserFirebase(email, password)
-          .then((user) => {
-            this.$router.push("/")
-            console.log(user);
-          })
-          .catch((err) => {
-            alert(err);
-          });
+      if (validateEntries(email, password)) {
+        registerUserFirebase(email, password);
       }
     },
   },

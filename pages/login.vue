@@ -23,7 +23,7 @@
         />
        <NuxtLink to="/signup"><h5 class="already-have-account">I don't have an account</h5></NuxtLink> 
         <button class="sign-up-btn" type="submit" @click="logInUser">
-          Sign Up
+          Log In
         </button>
         <h5 v-if="missingField" style="font-weight: 300">There is one or more missing fields...</h5>
       </section>

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.logInUser = exports.registerUser = exports.userIsSignedIn = void 0;
+exports.addIncome = exports.logInUser = exports.registerUser = exports.userIsSignedIn = void 0;
 var app_1 = require("firebase/app");
 var auth_1 = require("firebase/auth");
 var firebaseConfig = {
@@ -60,7 +60,7 @@ function userIsSignedIn() {
                     getInfo = new Promise(function (resolve, reject) {
                         (0, auth_1.onAuthStateChanged)(auth, function (user) {
                             if (user) {
-                                resolve(true);
+                                resolve(user);
                             }
                             else {
                                 reject("User not found");
@@ -78,24 +78,21 @@ function userIsSignedIn() {
 exports.userIsSignedIn = userIsSignedIn;
 function registerUser(email, password) {
     return __awaiter(this, void 0, void 0, function () {
-        var promiseregisteruser, awaitregister;
+        var userCredential, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    promiseregisteruser = new Promise(function (resolve, reject) {
-                        (0, auth_1.createUserWithEmailAndPassword)(auth, email, password)
-                            .then(function (userCredential) {
-                            // Signed up
-                            var user = userCredential.user;
-                            resolve(user);
-                        })["catch"](function (error) {
-                            reject(error.message);
-                        });
-                    });
-                    return [4 /*yield*/, promiseregisteruser];
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, (0, auth_1.createUserWithEmailAndPassword)(auth, email, password)];
                 case 1:
-                    awaitregister = _a.sent();
-                    return [2 /*return*/, awaitregister];
+                    userCredential = _a.sent();
+                    console.log(userCredential);
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_1 = _a.sent();
+                    alert(err_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
@@ -103,25 +100,31 @@ function registerUser(email, password) {
 exports.registerUser = registerUser;
 function logInUser(email, password) {
     return __awaiter(this, void 0, void 0, function () {
-        var promiseloginuser, awaitloginuser;
+        var userCredential, user, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    promiseloginuser = new Promise(function (resolve, reject) {
-                        (0, auth_1.signInWithEmailAndPassword)(auth, email, password).then(function (userCredential) {
-                            // Signed in
-                            var user = userCredential.user;
-                            resolve(user);
-                        })["catch"](function (error) {
-                            reject(error.message);
-                        });
-                    });
-                    return [4 /*yield*/, promiseloginuser];
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, (0, auth_1.signInWithEmailAndPassword)(auth, email, password)];
                 case 1:
-                    awaitloginuser = _a.sent();
-                    return [2 /*return*/, awaitloginuser];
+                    userCredential = _a.sent();
+                    user = userCredential.user;
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    alert(error_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
 }
 exports.logInUser = logInUser;
+function addIncome(email, password) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/];
+        });
+    });
+}
+exports.addIncome = addIncome;
