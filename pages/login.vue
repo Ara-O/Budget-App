@@ -26,12 +26,14 @@
           Log In
         </button>
         <h5 v-if="missingField" style="font-weight: 300">There is one or more missing fields...</h5>
+        <h5 v-if="loading" style="font-weight: 300">Logging you in...</h5>
+        <h5 v-if="loadingError" style="font-weight: 300">There has been an error</h5>
       </section>
     </section>
   </main>
 </template>
 
-<style>
+<style scoped>
 @import url("../assets/styles/sign-up.css");
 @import url("../assets/styles/styles.css");
 </style>
@@ -48,6 +50,8 @@ export default {
   data(){
     return {
       missingField: false,
+      loading: false,
+      loadingError: false,
     }
   },
 
@@ -66,11 +70,17 @@ export default {
     logInUser() {
       let email = this.$refs.email.value;
       let password = this.$refs.password.value;
-      this.missingField = false;
+      this.missingField = this.loadingError = false;
+      this.loading = true;
       if(this.validateEntry(email, password)){
-        logInUserFirebase(email, password).then((user)=> {
-          this.$router.push("/")
-        }).catch((err) => alert(err))
+        logInUserFirebase(email, password, this).then((uid)=> {
+          this.$store.commit("changeUserID", uid);
+          this.$router.push("/");
+        }).catch((err)=> {
+          this.loading = false;
+          this.loadingError = true;
+          console.log(err.message)
+        });
       }
     },
   },

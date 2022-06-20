@@ -39,30 +39,34 @@
         <h5 v-if="missingField" style="font-weight: 300">
           There is one or more missing fields...
         </h5>
+        <h5 v-if="loading" style="font-weight: 300">Signing Up...</h5>
+        <h5 v-if="loadingError" style="font-weight: 300">
+          There has been an error
+        </h5>
       </section>
     </section>
   </main>
 </template>
 
-<style>
-@import url("../assets/styles/sign-up.css");
-@import url("../assets/styles/styles.css");
-</style>
-
 <script>
 import { registerUser as registerUserFirebase } from "../modules/firebaseServices";
-import {validateEntries} from "../modules/utilities.js"
+import { validateEntries } from "../modules/utilities.js";
 export default {
   // transition: "sign-up",
   head() {
     return {
       title: "Sign Up",
+      // bodyAttrs: {
+      //   class: "reset-body",
+      // },
     };
   },
 
   data() {
     return {
       missingField: false,
+      loading: false,
+      loadingError: false,
     };
   },
 
@@ -70,9 +74,20 @@ export default {
     registerUser() {
       let email = this.$refs.email.value;
       let password = this.$refs.password.value;
-      this.missingField = false;
+      this.missingField = this.loadingError = false;
+
       if (validateEntries(email, password)) {
-        registerUserFirebase(email, password);
+        this.loading = true;
+        registerUserFirebase(email, password, this).then((uid)=> {
+          this.$store.commit("changeUserID", uid);
+          this.$router.push("/");
+        }).catch((err)=> {
+          this.loading = false;
+          this.loadingError = true;
+          console.log(err.message)
+        });
+      } else {
+        this.missingField = false;
       }
     },
   },
@@ -82,4 +97,15 @@ export default {
   },
 };
 </script>
-</script>
+
+  
+<style scoped>
+@import url("../assets/styles/sign-up.css");
+@import url("../assets/styles/styles.css");
+</style>
+  
+<style>
+body {
+  margin: 0px;
+}
+</style>

@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: process.env.apiKey,
@@ -16,49 +15,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export async function userIsSignedIn() {
+export function userIsSignedIn() {
     let getInfo = new Promise((resolve, reject) => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                resolve(user)
+                resolve(user.uid)
             } else {
                 reject("User not found")
             }
         });
-    }).catch((err) => { console.log(err); return false })
+    })
 
-    let dataReceived = await getInfo;
-    return dataReceived
+    return getInfo
 }
 
 export async function registerUser(email, password) {
     try {
         //await returns the fulfilled value of the promise;
         let userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(userCredential)
+        let uid = userCredential.user.uid;
+        return uid
     } catch (err) {
-        alert(err)
+        throw err
     }
-
 }
 
-export async function logInUser(email, password) {
+export async function logInUser(email, password, this_value) {
     try {
         let userCredential = await signInWithEmailAndPassword(auth, email, password)
-        const user = userCredential.user;
-
-    } catch (error) {
-        alert(error)
+        let uid = userCredential.user.uid;
+        return uid
+    } catch (err) {
+        throw err
     }
-
-
-}
-
-export async function addIncome(email, password) {
-    //! First get user ID!
-    // const db = getDatabase();
-    // set(ref(db, 'users/' + userId), {
-    //   password: name,
-    //   email: email,
-    // });
 }

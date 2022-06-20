@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.addIncome = exports.logInUser = exports.registerUser = exports.userIsSignedIn = void 0;
+exports.logInUser = exports.registerUser = exports.userIsSignedIn = void 0;
 var app_1 = require("firebase/app");
 var auth_1 = require("firebase/auth");
 var firebaseConfig = {
@@ -52,33 +52,22 @@ var firebaseConfig = {
 var app = (0, app_1.initializeApp)(firebaseConfig);
 var auth = (0, auth_1.getAuth)(app);
 function userIsSignedIn() {
-    return __awaiter(this, void 0, void 0, function () {
-        var getInfo, dataReceived;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    getInfo = new Promise(function (resolve, reject) {
-                        (0, auth_1.onAuthStateChanged)(auth, function (user) {
-                            if (user) {
-                                resolve(user);
-                            }
-                            else {
-                                reject("User not found");
-                            }
-                        });
-                    })["catch"](function (err) { console.log(err); return false; });
-                    return [4 /*yield*/, getInfo];
-                case 1:
-                    dataReceived = _a.sent();
-                    return [2 /*return*/, dataReceived];
+    var getInfo = new Promise(function (resolve, reject) {
+        (0, auth_1.onAuthStateChanged)(auth, function (user) {
+            if (user) {
+                resolve(user.uid);
+            }
+            else {
+                reject("User not found");
             }
         });
     });
+    return getInfo;
 }
 exports.userIsSignedIn = userIsSignedIn;
 function registerUser(email, password) {
     return __awaiter(this, void 0, void 0, function () {
-        var userCredential, err_1;
+        var userCredential, uid, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -86,21 +75,20 @@ function registerUser(email, password) {
                     return [4 /*yield*/, (0, auth_1.createUserWithEmailAndPassword)(auth, email, password)];
                 case 1:
                     userCredential = _a.sent();
-                    console.log(userCredential);
-                    return [3 /*break*/, 3];
+                    uid = userCredential.user.uid;
+                    return [2 /*return*/, uid];
                 case 2:
                     err_1 = _a.sent();
-                    alert(err_1);
-                    return [3 /*break*/, 3];
+                    throw err_1;
                 case 3: return [2 /*return*/];
             }
         });
     });
 }
 exports.registerUser = registerUser;
-function logInUser(email, password) {
+function logInUser(email, password, this_value) {
     return __awaiter(this, void 0, void 0, function () {
-        var userCredential, user, error_1;
+        var userCredential, uid, err_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -108,23 +96,14 @@ function logInUser(email, password) {
                     return [4 /*yield*/, (0, auth_1.signInWithEmailAndPassword)(auth, email, password)];
                 case 1:
                     userCredential = _a.sent();
-                    user = userCredential.user;
-                    return [3 /*break*/, 3];
+                    uid = userCredential.user.uid;
+                    return [2 /*return*/, uid];
                 case 2:
-                    error_1 = _a.sent();
-                    alert(error_1);
-                    return [3 /*break*/, 3];
+                    err_2 = _a.sent();
+                    throw err_2;
                 case 3: return [2 /*return*/];
             }
         });
     });
 }
 exports.logInUser = logInUser;
-function addIncome(email, password) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/];
-        });
-    });
-}
-exports.addIncome = addIncome;

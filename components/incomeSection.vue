@@ -6,10 +6,10 @@
       <h4>Amount</h4>
     </article>
     <div class="income-section_line"></div>
-    <div>
-      <article class="income-section_header">
-        <h4>Salary</h4>
-        <h4>$500</h4>
+    <div v-for="income in incomeList" :key="income">
+      <article class="income-section_header" >
+        <h4>{{ income.incomeSource }}</h4>
+        <h4>{{ income.incomeAmount }}</h4>
       </article>
       <div class="income-section_line"></div>
     </div>
@@ -18,16 +18,15 @@
         <div>
           <label for="income-source">From: </label>
           <br />
-          <input type="text" class="income-source" v-model="incomeSource" />
+          <input type="text" id="income-source" v-model="incomeSource" />
         </div>
         <div>
           <label for="income-amount">Amount: </label>
           <br />
-          <input type="number" id="income-amount" v-model="incomeAmount"/>
+          <input type="number" id="income-amount" v-model="incomeAmount" />
         </div>
         <button class="add-income-btn" @click="addIncome">
           <img src="~/assets/images/plus-icon.png" alt="Plus icon" />
-          Add
         </button>
       </article>
     </div>
@@ -35,25 +34,55 @@
 </template>
 
 <script lang="ts">
-import {validateEntries} from "../modules/utilities"
+import { validateEntries } from "../modules/utilities";
+import { getDatabase, ref, push, onValue } from "firebase/database";
 import Vue from "vue";
+import { mapGetters } from "vuex";
 export default Vue.extend({
   data() {
     return {
-      incomeSource: "Bob gave me money",
-      incomeAmount: 500
+      incomeList: [],
+      incomeSource: "" as string,
+      incomeAmount: 0 as number,
     };
   },
 
+  computed: {
+    ...mapGetters(["getUserID"]),
+  },
+
   methods: {
-    addIncome(){
-      if(validateEntries(this.incomeSource, this.incomeAmount)){
-        console.log("successful yay!")
+    addIncome() {
+      if (validateEntries(this.incomeSource, this.incomeAmount)) {
+        console.log("successful yay!");
+        let _this = this;
+        const db = getDatabase();
+        push(ref(db, "users/" + _this.getUserID + "/income"), {
+          incomeSource: _this.incomeSource,
+          incomeAmount: _this.incomeAmount,
+        });
       } else {
-        console.log("Unsuccessful yay")
+        // !Handle inccomplete input
+        console.log("Unsuccessful yay");
       }
-    }
-  }
+    },
+
+    loadIncomeData() {
+      const db = getDatabase();
+      const incomeDataRef = ref(db, "users/" + this.getUserID + "/income");
+      let _this = this;
+      onValue(incomeDataRef, (snapshot) => {
+        const data = snapshot.val();
+        for (const key in data) {
+          _this.incomeList.push(data[key]);
+        }
+      });
+    },
+  },
+
+  mounted() {
+    this.loadIncomeData();
+  },
 });
 </script>
 
@@ -74,7 +103,7 @@ export default Vue.extend({
   font-size: 12px;
 }
 .income-section_line {
-  height: 1px;
+  height: 0.5px;
   background: lightgray;
 }
 
@@ -107,13 +136,12 @@ export default Vue.extend({
 .add-income-btn {
   background-color: white;
   height: 31px;
-  width: 69px;
+  width: 34px;
   border-color: #468c5f;
   border-style: solid;
   border-width: 2.5px;
   font-weight: 500;
   color: #468c5f;
-  column-gap: 4px;
   justify-content: center;
   border-radius: 6px;
   display: flex;
@@ -121,6 +149,12 @@ export default Vue.extend({
   cursor: pointer;
   transition: background-color 250ms linear, color 250ms linear;
 }
+/* 
+.add-income-btn h4{
+    font-weight: 500;
+    font-family: 'Poppins';
+} */
+
 .add-income-btn:hover {
   background-color: #468c5f;
   color: white;
@@ -131,6 +165,15 @@ export default Vue.extend({
 }
 
 .add-income-btn img {
-  width: 14px;
+  width: 15px;
+}
+
+.title {
+  font-weight: 500;
+}
+
+#income-source,
+#income-amount {
+  font-family: "Poppins";
 }
 </style>

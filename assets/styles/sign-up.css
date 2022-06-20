@@ -4,17 +4,27 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0px;
+    margin: 0px !important;
     overflow: hidden
 }
 
+html {
+    /* background-color: #F2F5F7 !important; */
+    /* padding: 3vh 3vh; */
+    overflow: hidden;
+}
+
+.reset-body{
+    margin: 0px;
+}
 
 .sign-up-main {
     display: flex;
-    justify-content: center;align-items: center;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     width: 100vw;
-    overflow: none;
+    overflow: hidden;
     column-gap: 200px;
 }
 

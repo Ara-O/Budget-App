@@ -35,19 +35,29 @@ export default Vue.extend({
     };
   },
   mounted() {
-    userIsSignedIn().then((user) => {
-      if (user) {
-        this.$store.commit("changeUserID", user)
+    userIsSignedIn()
+      .then((res) => {
+        this.$store.commit("changeUserID", res);
         this.userIsSignedIn = true;
-      } else {
-        this.$router.push("/signup");
-      }
-    });
+      })
+      .catch((err) => {
+        this.$router.push("/signup")
+        console.log(err);
+      });
   },
 });
 </script>
 
-<style>
-@import url("../assets/styles/styles.css");
+ <style scoped>
 @import url("../assets/styles/main.css");
+@import url("../assets/styles/styles.css");
+/* @import url("../assets/styles/sign-up.css"); */
 </style>
+
+<style>
+html {
+  background-color: #f2f5f7 !important;
+  padding: 2vh 2vh;
+  overflow: hidden;
+}
+</style> 

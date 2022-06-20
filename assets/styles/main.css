@@ -7,7 +7,7 @@ html {
 .index-main{
     display: flex;
     column-gap: 2vh;
-    height: 94vh;
+    height: 95vh;
 }
 
 body {
@@ -30,12 +30,12 @@ body {
 .bill-section,
 .total-income-section {
     background: white;
-    width: 47vh;
+    /* width: 43vh; */
     display: inline-block;
     border-radius: 7px;
     box-shadow: -1px 1px 1px #e3e3e3, 1px -1px 2px rgb(231 231 231 / 51%);
     box-sizing: border-box;
-    padding: 10px 24px;
+    padding: 19px 32px;
 }
 
 .total-income-section {
