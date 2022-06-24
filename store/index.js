@@ -2,7 +2,7 @@ export const state = () => ({
     userID: ""
   })
   
-  export const getters  2 = {
+  export const getters = {
     getUserID(state) {
       return state.userID
     }

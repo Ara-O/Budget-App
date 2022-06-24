@@ -1,35 +1,78 @@
 <template>
   <section class="income-section">
-    <h3 class="title">INCOME</h3>
+    <div class="income-section_title">
+      <h3 class="title">INCOME</h3>
+      <img
+        src="../assets/images/edit-icon.png"
+        key="1"
+        v-show="!hoveringOverEditIcon && !editingIncome"
+        alt="Edit icon"
+        class="edit-icon"
+        title="Edit icon by icons8"
+        @mouseover="hoveringOverEditIcon = true"
+        @click="editingIncome = !editingIncome"
+      />
+      <img
+        src="../assets/images/edit-icon2.png"
+        key="2"
+        v-show="hoveringOverEditIcon || editingIncome"
+        alt="Edit icon"
+        class="edit-icon"
+        title="Edit icon by icons8"
+        @mouseleave="hoveringOverEditIcon = false"
+        @click="editingIncome = !editingIncome"
+      />
+    </div>
     <article class="income-section_header_title">
       <h4>From</h4>
       <h4>Amount</h4>
     </article>
     <div class="income-section_line"></div>
-    <div v-for="income in incomeList" :key="income">
-      <article class="income-section_header" >
-        <h4>{{ income.incomeSource }}</h4>
-        <h4>{{ income.incomeAmount }}</h4>
-      </article>
-      <div class="income-section_line"></div>
-    </div>
-    <div>
-      <article class="add-income">
+    <TransitionGroup tag="div" name="income-list" class="income-list-wrapper">
+      <div v-for="(income, index) in incomeList" :key="income.key">
+        <article class="income-section_header">
+          <Transition name="slide-in">
+            <img
+              src="../assets/images/remove-icon.png"
+              alt="Remove icon"
+              class="remove-income-btn"
+              v-show="editingIncome"
+              @click="removeIncome(income)"
+            />
+          </Transition>
+          <h4
+            :class="{ 'editing-income-transform': editingIncome }"
+            class="income-source"
+          >
+            {{ income.incomeSource }}
+          </h4>
+          <h4>{{ income.incomeAmount }}</h4>
+        </article>
+        <div class="income-section_line"></div>
+      </div>
+    </TransitionGroup>
+
+    <!-- ADD INCOME  -->
+    <Transition name="slide-out" mode="out-in">
+      <article class="add-income" v-if="!editingIncome">
         <div>
           <label for="income-source">From: </label>
           <br />
-          <input type="text" id="income-source" v-model="incomeSource" />
+          <input type="text" id="income-source" v-model="inputIncomeSource" />
         </div>
         <div>
           <label for="income-amount">Amount: </label>
           <br />
-          <input type="number" id="income-amount" v-model="incomeAmount" />
+          <input type="number" id="income-amount" v-model="inputIncomeAmount" />
         </div>
         <button class="add-income-btn" @click="addIncome">
           <img src="~/assets/images/plus-icon.png" alt="Plus icon" />
         </button>
       </article>
-    </div>
+      <div v-else>
+        <button class="save-income-changes">Save</button>
+      </div>
+    </Transition>
   </section>
 </template>
 
@@ -42,8 +85,11 @@ export default Vue.extend({
   data() {
     return {
       incomeList: [],
-      incomeSource: "" as string,
-      incomeAmount: 0 as number,
+      incomeListB: [],
+      inputIncomeSource: "test" as string,
+      inputIncomeAmount: 40 as number,
+      hoveringOverEditIcon: false,
+      editingIncome: false as boolean,
     };
   },
 
@@ -53,14 +99,15 @@ export default Vue.extend({
 
   methods: {
     addIncome() {
-      if (validateEntries(this.incomeSource, this.incomeAmount)) {
+      if (validateEntries(this.inputIncomeSource, this.inputIncomeSource)) {
         console.log("successful yay!");
         let _this = this;
         const db = getDatabase();
         push(ref(db, "users/" + _this.getUserID + "/income"), {
-          incomeSource: _this.incomeSource,
-          incomeAmount: _this.incomeAmount,
+          incomeSource: _this.inputIncomeSource,
+          incomeAmount: _this.inputIncomeAmount,
         });
+        this.loadIncomeData();
       } else {
         // !Handle inccomplete input
         console.log("Unsuccessful yay");
@@ -68,15 +115,25 @@ export default Vue.extend({
     },
 
     loadIncomeData() {
+      console.log("loading income data");
       const db = getDatabase();
       const incomeDataRef = ref(db, "users/" + this.getUserID + "/income");
       let _this = this;
+      this.incomeList = [];
       onValue(incomeDataRef, (snapshot) => {
         const data = snapshot.val();
         for (const key in data) {
-          _this.incomeList.push(data[key]);
+          data[key].key = key;
+          _this.incomeList.unshift(data[key]);
         }
       });
+    },
+
+    removeIncome(income) {
+      console.log(income);
+      this.incomeList = this.incomeList.filter(
+        (data) => data.key !== income.key
+      );
     },
   },
 
@@ -91,6 +148,8 @@ export default Vue.extend({
 .income-section_header_title {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  position: relative
 }
 
 .income-section_header h4 {
@@ -109,7 +168,7 @@ export default Vue.extend({
 
 .add-income {
   display: flex;
-  padding: 27px 0px 0px 0px;
+  padding: 14px 0px 0px 0px;
   column-gap: 16px;
   align-items: center;
   justify-content: space-between;
@@ -175,5 +234,77 @@ export default Vue.extend({
 #income-source,
 #income-amount {
   font-family: "Poppins";
+}
+
+.edit-icon {
+  width: 20px;
+  cursor: pointer;
+}
+
+.income-section_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slide-in-leave-active,
+.slide-in-enter-active {
+  transition: all 0.5s ease;
+}
+
+.slide-in-enter,
+.slide-in-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+.slide-out-leave-active,
+.slide-out-enter-active {
+  transition: all 0.5s ease;
+}
+
+.slide-out-enter,
+.slide-out-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+.income-list-enter-active,
+.income-list-leave-active,
+.income-list-move {
+  transition: all 0.5s ease;
+}
+.income-list-enter-from,
+.income-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.remove-income-btn {
+  width: 12px;
+  cursor: pointer;
+  position: absolute;
+}
+
+.editing-income-transform {
+  transform: translateX(50px);
+}
+
+.income-source {
+  transition: all 0.6s ease;
+}
+
+.save-income-changes {
+  margin-left: 187.5px;
+  margin-top: 28px;
+}
+
+.income-list-wrapper {
+  overflow: auto;
+  height: 152px;
+}
+
+.income-list-wrapper::-webkit-scrollbar {
+  display: none;
 }
 </style>
