@@ -70,7 +70,7 @@
         </button>
       </article>
       <div v-else>
-        <button class="save-income-changes">Save</button>
+        <button class="save-income-changes" @click="saveIncomeChanges">Save</button>
       </div>
     </Transition>
   </section>
@@ -78,14 +78,13 @@
 
 <script lang="ts">
 import { validateEntries } from "../modules/utilities";
-import { getDatabase, ref, push, onValue } from "firebase/database";
+import { getDatabase, ref, push, onValue, set } from "firebase/database";
 import Vue from "vue";
 import { mapGetters } from "vuex";
 export default Vue.extend({
   data() {
     return {
       incomeList: [],
-      incomeListB: [],
       inputIncomeSource: "test" as string,
       inputIncomeAmount: 40 as number,
       hoveringOverEditIcon: false,
@@ -95,6 +94,14 @@ export default Vue.extend({
 
   computed: {
     ...mapGetters(["getUserID"]),
+    incomeListArranged(){
+      let incomeListAscending = [];
+      this.incomeList.forEach((data)=> {
+        incomeListAscending.unshift(data)
+      })
+      console.log(incomeListAscending)
+      return incomeListAscending;
+    }
   },
 
   methods: {
@@ -108,6 +115,8 @@ export default Vue.extend({
           incomeAmount: _this.inputIncomeAmount,
         });
         this.loadIncomeData();
+        // this.inputIncomeAmount = 0;
+        // this.inputIncomeSource = ''
       } else {
         // !Handle inccomplete input
         console.log("Unsuccessful yay");
@@ -135,6 +144,14 @@ export default Vue.extend({
         (data) => data.key !== income.key
       );
     },
+
+    saveIncomeChanges(){
+      const db = getDatabase();
+      let _this = this;
+      set(ref(db, "users/" + _this.getUserID + "/income"), _this.incomeListArranged);
+      this.loadIncomeData();
+      this.editingIncome = false;
+    }
   },
 
   mounted() {
@@ -295,8 +312,18 @@ export default Vue.extend({
 }
 
 .save-income-changes {
-  margin-left: 187.5px;
-  margin-top: 28px;
+  margin-left: 163.5px;
+    margin-top: 24px;
+    background: #42865a;
+    height: 33px;
+    color: white;
+    width: 70px;
+    border: 0px;
+    border-radius: 5px;
+    font-family: 'Poppins';
+    font-size: 12px;
+    box-shadow: 0px 0px 2px lightgrey;
+    cursor: pointer
 }
 
 .income-list-wrapper {
