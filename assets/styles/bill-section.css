@@ -1,0 +1,211 @@
+.title {
+    font-weight: 500;
+    margin-top: 6px;
+}
+
+input:focus {
+    border-color: #468c5f;
+}
+
+.bill-section-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bill-section-title h4 {
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.bill-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    width: 100%;
+}
+
+.bill-item h4 {
+    font-weight: 400;
+}
+
+.bill-section_line {
+    height: 0.5px;
+    background: lightgray;
+    width: 100%;
+}
+
+.add-bill {
+    display: flex;
+    padding: 14px 0px 0px 0px;
+    column-gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-bill label {
+    font-size: 12px;
+}
+
+.add-bill input {
+    width: 80px;
+    height: 27px;
+    font-family: "Poppins";
+    border-width: 0px;
+    border-bottom-width: 1px;
+    font-size: 12px;
+}
+
+.add-bill input:focus {
+    outline: 0;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+
+.add-bill-btn {
+    background-color: white;
+    height: 31px;
+    width: 34px;
+    border-color: #468c5f;
+    border-style: solid;
+    border-width: 2.5px;
+    font-weight: 500;
+    color: #468c5f;
+    justify-content: center;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 250ms linear, color 250ms linear;
+}
+
+.add-bill-btn:hover {
+    background-color: #468c5f;
+    color: white;
+}
+
+.add-bill-btn:hover img {
+    filter: brightness(3.5);
+}
+
+.add-bill-btn img {
+    width: 15px;
+}
+
+.bill-list-wrapper {
+    height: 123px;
+    overflow: auto;
+}
+
+.bill-list-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.bill-frequency {
+    height: 29px;
+    margin-top: 13px;
+    border: solid 1px lightgray;
+    /* border-radius: 4px; */
+    box-sizing: border-box;
+    width: 104px;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+
+.bill-progress-enter-active,
+.bill-progress-leave-active {
+    transition: all 0.5s ease;
+}
+
+.bill-progress-leave-to,
+.bill-progress-enter {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+.bill-list-enter-active,
+.bill-list-leave-active,
+.bill-list-move {
+    transition: all 0.5s ease;
+}
+
+.bill-list-enter,
+.bill-list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+.edit-icon {
+    width: 20px;
+    cursor: pointer;
+}
+
+.bill-section-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bill-source {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.6s ease;
+    max-width: 141px;
+}
+
+.remove-bill-btn {
+    width: 12px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.slide-in-leave-active,
+.slide-in-enter-active {
+    transition: all 0.5s ease;
+}
+
+.slide-in-enter,
+.slide-in-leave-to {
+    transform: translateX(-20px);
+    opacity: 0;
+}
+
+.editing-bill-item {
+    transform: translateX(50px);
+}
+
+.bill-section_header,
+.bill-section_header_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+input:focus {
+    border-color: #468c5f;
+}
+
+.bill-section_header h4 {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.bill-section_header_title h4 {
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.save-bill-changes {
+    margin-left: 163.5px;
+    margin-top: 24px;
+    background: #42865a;
+    height: 33px;
+    color: white;
+    width: 70px;
+    border: 0px;
+    border-radius: 5px;
+    font-family: 'Poppins';
+    font-size: 12px;
+    box-shadow: 0px 0px 2px lightgrey;
+    cursor: pointer
+}

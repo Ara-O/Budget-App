@@ -27,6 +27,8 @@
       <h4>From</h4>
       <h4>Amount</h4>
     </article>
+
+    <!-- LIST INCOME SOURCES -->
     <div class="income-section_line"></div>
     <TransitionGroup tag="div" name="income-list" class="income-list-wrapper">
       <div v-for="(income, index) in incomeList" :key="income.key">
@@ -63,7 +65,7 @@
         <div>
           <label for="income-amount">Amount: </label>
           <br />
-          <input type="number" id="income-amount" v-model="inputIncomeAmount" />
+          <input type="number" id="income-amount" v-model="inputIncomeAmount" min="0"/>
         </div>
         <button class="add-income-btn" @click="addIncome">
           <img src="~/assets/images/plus-icon.png" alt="Plus icon" />
@@ -128,8 +130,8 @@ export default Vue.extend({
       const db = getDatabase();
       const incomeDataRef = ref(db, "users/" + this.getUserID + "/income");
       let _this = this;
-      this.incomeList = [];
       onValue(incomeDataRef, (snapshot) => {
+        this.incomeList = [];
         const data = snapshot.val();
         for (const key in data) {
           data[key].key = key;
@@ -161,177 +163,5 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.income-section_header,
-.income-section_header_title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative
-}
-
-.income-section_header h4 {
-  font-weight: 400;
-  font-size: 12px;
-}
-
-.income-section_header_title h4 {
-  font-weight: 500;
-  font-size: 12px;
-}
-.income-section_line {
-  height: 0.5px;
-  background: lightgray;
-}
-
-.add-income {
-  display: flex;
-  padding: 14px 0px 0px 0px;
-  column-gap: 16px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.add-income label {
-  font-size: 12px;
-}
-
-.add-income input {
-  width: 80px;
-  height: 21px;
-  border-width: 0px;
-  border-bottom-width: 1px;
-  font-size: 12px;
-}
-
-.add-income input:focus {
-  outline: 0;
-  border-width: 0px;
-  border-bottom-width: 1px;
-}
-
-.add-income-btn {
-  background-color: white;
-  height: 31px;
-  width: 34px;
-  border-color: #468c5f;
-  border-style: solid;
-  border-width: 2.5px;
-  font-weight: 500;
-  color: #468c5f;
-  justify-content: center;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 250ms linear, color 250ms linear;
-}
-/* 
-.add-income-btn h4{
-    font-weight: 500;
-    font-family: 'Poppins';
-} */
-
-.add-income-btn:hover {
-  background-color: #468c5f;
-  color: white;
-}
-
-.add-income-btn:hover img {
-  filter: brightness(3.5);
-}
-
-.add-income-btn img {
-  width: 15px;
-}
-
-.title {
-  font-weight: 500;
-}
-
-#income-source,
-#income-amount {
-  font-family: "Poppins";
-}
-
-.edit-icon {
-  width: 20px;
-  cursor: pointer;
-}
-
-.income-section_title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.slide-in-leave-active,
-.slide-in-enter-active {
-  transition: all 0.5s ease;
-}
-
-.slide-in-enter,
-.slide-in-leave-to {
-  transform: translateX(-20px);
-  opacity: 0;
-}
-
-.slide-out-leave-active,
-.slide-out-enter-active {
-  transition: all 0.5s ease;
-}
-
-.slide-out-enter,
-.slide-out-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
-
-.income-list-enter-active,
-.income-list-leave-active,
-.income-list-move {
-  transition: all 0.5s ease;
-}
-.income-list-enter-from,
-.income-list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-.remove-income-btn {
-  width: 12px;
-  cursor: pointer;
-  position: absolute;
-}
-
-.editing-income-transform {
-  transform: translateX(50px);
-}
-
-.income-source {
-  transition: all 0.6s ease;
-}
-
-.save-income-changes {
-  margin-left: 163.5px;
-    margin-top: 24px;
-    background: #42865a;
-    height: 33px;
-    color: white;
-    width: 70px;
-    border: 0px;
-    border-radius: 5px;
-    font-family: 'Poppins';
-    font-size: 12px;
-    box-shadow: 0px 0px 2px lightgrey;
-    cursor: pointer
-}
-
-.income-list-wrapper {
-  overflow: auto;
-  height: 152px;
-}
-
-.income-list-wrapper::-webkit-scrollbar {
-  display: none;
-}
+@import url("../assets/styles/income-section.css");
 </style>
