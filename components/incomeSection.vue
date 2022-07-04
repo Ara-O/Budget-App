@@ -65,14 +65,21 @@
         <div>
           <label for="income-amount">Amount: </label>
           <br />
-          <input type="number" id="income-amount" v-model="inputIncomeAmount" min="0"/>
+          <input
+            type="number"
+            id="income-amount"
+            v-model="inputIncomeAmount"
+            min="0"
+          />
         </div>
         <button class="add-income-btn" @click="addIncome">
           <img src="~/assets/images/plus-icon.png" alt="Plus icon" />
         </button>
       </article>
       <div v-else>
-        <button class="save-income-changes" @click="saveIncomeChanges">Save</button>
+        <button class="save-income-changes" @click="saveIncomeChanges">
+          Save
+        </button>
       </div>
     </Transition>
   </section>
@@ -96,14 +103,22 @@ export default Vue.extend({
 
   computed: {
     ...mapGetters(["getUserID"]),
-    incomeListArranged(){
+    incomeListArranged() {
       let incomeListAscending = [];
-      this.incomeList.forEach((data)=> {
-        incomeListAscending.unshift(data)
-      })
-      console.log(incomeListAscending)
+      this.incomeList.forEach((data) => {
+        incomeListAscending.unshift(data);
+      });
+      console.log(incomeListAscending);
       return incomeListAscending;
-    }
+    },
+
+    getDate() {
+      let currentDate = new Date();
+      let cDay = currentDate.getDate();
+      let cMonth = currentDate.getMonth() + 1;
+      let cYear = currentDate.getFullYear();
+      return `${cDay}/${cMonth}/${cYear}`;
+    },
   },
 
   methods: {
@@ -115,6 +130,7 @@ export default Vue.extend({
         push(ref(db, "users/" + _this.getUserID + "/income"), {
           incomeSource: _this.inputIncomeSource,
           incomeAmount: _this.inputIncomeAmount,
+          dateAdded: this.getDate
         });
         this.loadIncomeData();
         // this.inputIncomeAmount = 0;
@@ -138,6 +154,8 @@ export default Vue.extend({
           _this.incomeList.unshift(data[key]);
         }
       });
+      this.$store.commit("storeIncomeData", this.incomeList)
+
     },
 
     removeIncome(income) {
@@ -147,13 +165,16 @@ export default Vue.extend({
       );
     },
 
-    saveIncomeChanges(){
+    saveIncomeChanges() {
       const db = getDatabase();
       let _this = this;
-      set(ref(db, "users/" + _this.getUserID + "/income"), _this.incomeListArranged);
+      set(
+        ref(db, "users/" + _this.getUserID + "/income"),
+        _this.incomeListArranged
+      );
       this.loadIncomeData();
       this.editingIncome = false;
-    }
+    },
   },
 
   mounted() {

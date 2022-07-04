@@ -32,7 +32,7 @@
     <!-- LIST BILLS -->
 
     <TransitionGroup tag="div" name="bill-list" class="bill-list-wrapper">
-      <div v-for="(bill, index) in billList" :key="bill.key">
+      <div v-for="(bill, index) in billList" :key="index">
         <article class="bill-section_header">
           <Transition name="slide-in">
             <img
@@ -146,6 +146,13 @@ export default Vue.extend({
 
   computed: {
     ...mapGetters(["getUserID"]),
+    getDate() {
+      let currentDate = new Date();
+      let cDay = currentDate.getDate();
+      let cMonth = currentDate.getMonth() + 1;
+      let cYear = currentDate.getFullYear();
+      return `${cDay}/${cMonth}/${cYear}`;
+    },
   },
 
   methods: {
@@ -157,13 +164,10 @@ export default Vue.extend({
 
     removeBill(bill) {
       console.log(bill);
-      this.billList = this.billList.filter(
-        (data) => data.key !== bill.key
-      );
+      this.billList = this.billList.filter((data) => data.key !== bill.key);
     },
 
-    
-    saveBillChanges(){
+    saveBillChanges() {
       const db = getDatabase();
       let _this = this;
       set(ref(db, "users/" + _this.getUserID + "/bills"), _this.billList);
@@ -208,6 +212,7 @@ export default Vue.extend({
           source: this.inputBillSource,
           amount: this.inputBillAmount,
           frequency: this.inputBillFrequency,
+          dateAdded: this.getDate,
         });
         this.inputBillAmount = 0;
         this.inputBillSource = this.inputBillFrequency = "";
@@ -240,5 +245,5 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-@import url("../assets/styles/bill-section.css")
+@import url("../assets/styles/bill-section.css");
 </style>
