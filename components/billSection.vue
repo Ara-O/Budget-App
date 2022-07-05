@@ -125,18 +125,7 @@ export default Vue.extend({
     return {
       hoveringOverEditIcon: false,
       editingBill: false,
-      billList: [
-        {
-          source: "Spotify",
-          amount: 400,
-          frequency: "Bi-Weekly",
-        },
-        {
-          source: "Rent",
-          amount: 1000,
-          frequency: "Monthly",
-        },
-      ],
+      billList: [],
       inputBillSource: "Test" as string,
       inputBillAmount: 40 as number,
       inputBillFrequency: "" as string,
@@ -153,6 +142,22 @@ export default Vue.extend({
       let cYear = currentDate.getFullYear();
       return `${cDay}/${cMonth}/${cYear}`;
     },
+
+    billListFirebaseFormat(){
+      let firebaseFormat = {};
+
+      let billList = this.billList.reverse();
+      billList.forEach((data) => {
+        firebaseFormat[data.key] = {
+          source: data.source,
+          amount: data.amount,
+          frequency: data.frequency,
+          dateAdded: data.dateAdded,
+        };
+      });
+
+      return firebaseFormat;
+    }
   },
 
   methods: {
@@ -170,7 +175,7 @@ export default Vue.extend({
     saveBillChanges() {
       const db = getDatabase();
       let _this = this;
-      set(ref(db, "users/" + _this.getUserID + "/bills"), _this.billList);
+      set(ref(db, "users/" + _this.getUserID + "/bills"), _this.billListFirebaseFormat);
       this.loadBillData();
       this.editingBill = false;
     },

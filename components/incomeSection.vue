@@ -68,7 +68,7 @@
           <input
             type="number"
             id="income-amount"
-            v-model="inputIncomeAmount"
+            v-model.number="inputIncomeAmount"
             min="0"
           />
         </div>
@@ -87,7 +87,14 @@
 
 <script lang="ts">
 import { validateEntries } from "../modules/utilities";
-import { getDatabase, ref, push, onValue, set } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  set,
+  update,
+} from "firebase/database";
 import Vue from "vue";
 import { mapGetters } from "vuex";
 export default Vue.extend({
@@ -103,13 +110,30 @@ export default Vue.extend({
 
   computed: {
     ...mapGetters(["getUserID"]),
-    incomeListArranged() {
-      let incomeListAscending = [];
+
+    // Revert the income list ( which goes in newest-latest order ) to latest-newest order
+    incomeListRevertedToFirebaseOrder() {
+      let incomeListFormatted = [];
       this.incomeList.forEach((data) => {
-        incomeListAscending.unshift(data);
+        incomeListFormatted.unshift(data);
       });
-      console.log(incomeListAscending);
-      return incomeListAscending;
+      console.log(incomeListFormatted);
+      return incomeListFormatted;
+    },
+
+    // Converting the array format used to show incomeList back to object format with the key of the array objects as the key
+    incomeListFirebaseFormat() {
+      let firebaseFormat = {};
+      let incomeList = this.incomeListRevertedToFirebaseOrder;
+      incomeList.forEach((data) => {
+        firebaseFormat[data.key] = {
+          dateAdded: data.dateAdded,
+          incomeAmount: data.incomeAmount,
+          incomeSource: data.incomeSource,
+        };
+      });
+
+      return firebaseFormat;
     },
 
     getDate() {
@@ -129,8 +153,8 @@ export default Vue.extend({
         const db = getDatabase();
         push(ref(db, "users/" + _this.getUserID + "/income"), {
           incomeSource: _this.inputIncomeSource,
-          incomeAmount: _this.inputIncomeAmount,
-          dateAdded: this.getDate
+          incomeAmount: Number(_this.inputIncomeAmount),
+          dateAdded: this.getDate,
         });
         this.loadIncomeData();
         // this.inputIncomeAmount = 0;
@@ -154,8 +178,7 @@ export default Vue.extend({
           _this.incomeList.unshift(data[key]);
         }
       });
-      this.$store.commit("storeIncomeData", this.incomeList)
-
+      this.$store.commit("storeIncomeData", this.incomeList);
     },
 
     removeIncome(income) {
@@ -169,8 +192,8 @@ export default Vue.extend({
       const db = getDatabase();
       let _this = this;
       set(
-        ref(db, "users/" + _this.getUserID + "/income"),
-        _this.incomeListArranged
+        ref(db, "users/" + _this.getUserID + "/income/"),
+        this.incomeListFirebaseFormat
       );
       this.loadIncomeData();
       this.editingIncome = false;
