@@ -215,7 +215,7 @@ export default Vue.extend({
         const db = getDatabase();
         push(ref(db, "users/" + _this.getUserID + "/bills"), {
           source: this.inputBillSource,
-          amount: this.inputBillAmount,
+          amount: Number(this.inputBillAmount),
           frequency: this.inputBillFrequency,
           dateAdded: this.getDate,
         });

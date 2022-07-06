@@ -53,7 +53,7 @@ export default Vue.extend({
 <style>
 html {
   background-color: #f2f5f7 !important;
-  padding: 2vh 2vh;
+  padding: 1.4vh 2vh;
   overflow: hidden;
 }
 </style> 
