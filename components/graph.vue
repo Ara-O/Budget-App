@@ -11,6 +11,10 @@
           <h4>TOTAL INCOME</h4>
           <h3>${{ totalIncome }}</h3>
         </div>
+        <div class="total-income" v-if="visibleData === 'bills'">
+          <h4>TOTAL BILLS</h4>
+          <h3>${{ totalBills }}</h3>
+        </div>
         <div class="all-available-data">
           <div class="available-data-button" @click="visibleData = 'income'" :class="{selected: visibleData === 'income'}">
             <h4>Income</h4>
@@ -45,6 +49,7 @@ export default {
     return {
       visibleData: "bills",
       totalIncome: 0,
+      totalBills: 0,
     };
   },
 
@@ -67,6 +72,22 @@ export default {
 
         console.log('this is the total - ', total)
         this.totalIncome = total;
+      });
+    },
+    calculateBillsIncome() {
+      const db = getDatabase();
+      const totalBillsRef = ref(db, "users/" + this.getUserID + "/bills");
+
+      //Retrieve total income and add all of it
+      onValue(totalBillsRef, (snapshot) => {
+        let total = 0;
+        let data = snapshot.val();
+        for (const key in data) {
+          total += Number(data[key].amount);
+        }
+
+        console.log('this is the total - ', total)
+        this.totalBills = total;
       });
     },
   },

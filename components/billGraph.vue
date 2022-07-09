@@ -1,7 +1,30 @@
 <template>
-  <div style="width: 950px; height: 43vh">
-    <canvas id="myChartPie" width="400" height="400"></canvas>
-  </div>
+  <section class="bill-graph-section-items">
+    <section class="bill-graph-section-items_block_wrappper">
+      <div class="bill-graph-section-items_block">
+        <h4>Weekly</h4>
+        <h5>${{this.billFrequency.weekly}}</h5>
+        
+      </div>
+      <div class="bill-graph-section-items_block">
+        <h4>Bi-Weekly</h4>
+        <h5>${{this.billFrequency.biweekly}}</h5>
+      </div>
+    </section>
+    <div style="width: 300; height: 43vh">
+      <canvas id="myChartPie" width="300" height="400"></canvas>
+    </div>
+    <section class="bill-graph-section-items_block_wrappper">
+      <div class="bill-graph-section-items_block">
+        <h4>Bi-Monthly</h4>
+        <h5>${{this.billFrequency.bimonthly}}</h5>
+      </div>
+      <div class="bill-graph-section-items_block">
+        <h4>Monthly</h4>
+        <h5>${{this.billFrequency.monthly}}</h5>
+      </div>
+    </section>
+  </section>
 </template>
 
 <script>
@@ -16,7 +39,14 @@ export default {
       graphLabels: [],
       graphLabelsReadable: [],
       graphData: [],
-      graphBgColor: []
+      graphBgColor: [],
+      billFrequency: 
+        {
+          weekly: 0,
+          biweekly: 0,
+          monthly: 0,
+          bimonthly: 0,
+        },
     };
   },
 
@@ -25,6 +55,7 @@ export default {
   },
 
   methods: {
+
     retrieveBillData() {
       const db = getDatabase();
       const billDataRef = ref(db, "users/" + this.getUserID + "/bills");
@@ -33,6 +64,7 @@ export default {
         console.log("loading bill data for graph");
         _this.billData = snapshot.val();
         _this.generateGraphData();
+        _this.calculateBillFrequency()
       });
     },
 
@@ -42,11 +74,11 @@ export default {
       for (const key in this.billData) {
         this.graphLabels.push(this.billData[key].source);
         this.graphData.push(Number(this.billData[key].amount));
-        this.graphBgColor.push( `rgb(70, 140, 95, ${Math.random() * 1})`)
+        this.graphBgColor.push(`rgb(70, 140, 95, ${Math.random() * 1 + 0.2})`);
       }
 
       this.myChart?.destroy();
-      this.loadGraph()
+      this.loadGraph();
     },
 
     loadGraph() {
@@ -78,10 +110,78 @@ export default {
         },
       });
     },
+
+    calculateBillFrequency(){
+      console.log(this.billData)
+      for(const key in this.billData){
+        console.log(this.billData[key].frequency)
+        console.log(this.billData[key].amount)
+         if(this.billData[key].frequency === "Weekly"){
+          this.billFrequency.weekly += this.billData[key].amount
+         }
+         if(this.billData[key].frequency === "Bi-Weekly"){
+          this.billFrequency.biweekly += this.billData[key].amount
+         }
+         if(this.billData[key].frequency === "Bi-Monthly"){
+          this.billFrequency.bimonthly += this.billData[key].amount
+         }
+         if(this.billData[key].frequency === "Monthly"){
+          console.log('yas')
+          this.billFrequency.monthly += this.billData[key].amount
+         }
+      }
+    console.log(this.billFrequency)
+    }
   },
 
   mounted() {
-          this.retrieveBillData();
+    this.retrieveBillData();
   },
 };
 </script>
+
+<style scoped>
+.bill-graph-section-items {
+  display: flex;
+  grid-column-gap: 33px;
+  -moz-column-gap: 33px;
+  column-gap: 33px;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.bill-graph-section-items_block {
+  height: 117px;
+  width: 159px;
+  background: pink;
+  border-radius: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  box-shadow: -1px 1px 1px #e3e3e3, 1px -1px 2px rgb(231 231 231 / 51%);
+  flex-direction: column;
+  margin-top: 9px;
+}
+
+.bill-graph-section-items_block h5{
+  margin-top: 0px;
+  font-weight: 400;
+  font-size:13px
+}
+.bill-graph-section-items_block h4{
+  font-weight: 400;
+  font-size: 13px
+}
+
+.bill-graph-section-items_block_wrappper {
+  width: 173px;
+  flex-wrap: wrap;
+
+  display: flex;
+  justify-content: center;
+  column-gap: 19px;
+  align-items: center;
+}
+</style>
