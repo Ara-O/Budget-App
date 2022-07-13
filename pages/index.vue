@@ -9,9 +9,10 @@
     </section>
     <section class="main-section_right">
       <graph></graph>
-      <section class="expense-section">
-        <h3 class="title">EXPENSE SECTION</h3>
-      </section>
+      <div class="expenses-and-goals-section">
+        <expenses-section> </expenses-section>
+        <div class="goals-section"><h3>hello</h3></div>
+      </div>
     </section>
   </main>
 </template>
@@ -37,7 +38,7 @@ export default Vue.extend({
         this.userIsSignedIn = true;
       })
       .catch((err) => {
-        this.$router.push("/signup")
+        this.$router.push("/signup");
         console.log(err);
       });
   },

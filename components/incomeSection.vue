@@ -48,7 +48,7 @@
           >
             {{ income.incomeSource }}
           </h4>
-          <h4>{{ income.incomeAmount }}</h4>
+          <h4>${{ income.incomeAmount }}</h4>
         </article>
         <div class="income-section_line"></div>
       </div>

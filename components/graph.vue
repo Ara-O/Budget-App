@@ -74,6 +74,7 @@ export default {
         this.totalIncome = total;
       });
     },
+
     calculateBillsIncome() {
       const db = getDatabase();
       const totalBillsRef = ref(db, "users/" + this.getUserID + "/bills");
@@ -94,6 +95,7 @@ export default {
 
   mounted() {
     this.calculateTotalIncome();
+    this.calculateBillsIncome()
   },
 };
 </script>
@@ -144,7 +146,7 @@ export default {
 .total-income h3 {
   margin-top: 0px;
   font-size: 16px;
-  font-weight: 400;
+  font-weight:  400;
 }
 
 .available-data-button {
@@ -170,7 +172,7 @@ export default {
 
 .available-data-button h4 {
   margin-top: 8.5px;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .all-available-data {

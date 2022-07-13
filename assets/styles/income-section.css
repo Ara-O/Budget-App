@@ -11,7 +11,7 @@ input:focus{
 }
 
 .income-section_header h4 {
-  font-weight: 400;
+  font-weight: 300;
   font-size: 12px;
 }
 
@@ -31,6 +31,8 @@ input:focus{
   column-gap: 16px;
   align-items: center;
   justify-content: space-between;
+  position: absolute;
+  bottom: 27px;
 }
 
 .add-income label {
@@ -94,6 +96,7 @@ input:focus{
 #income-source,
 #income-amount {
   font-family: "Poppins";
+  font-weight: 300;
 }
 
 .edit-icon {

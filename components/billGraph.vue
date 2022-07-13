@@ -106,6 +106,9 @@ export default {
         type: "pie",
         data: data,
         options: {
+          // legend: {
+          //   display: false
+          // },
           maintainAspectRatio: false,
         },
       });
@@ -167,7 +170,7 @@ export default {
 
 .bill-graph-section-items_block h5{
   margin-top: 0px;
-  font-weight: 400;
+  font-weight: 300;
   font-size:13px
 }
 .bill-graph-section-items_block h4{

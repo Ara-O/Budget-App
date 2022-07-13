@@ -4,7 +4,7 @@ html {
     overflow: hidden
 }
 
-.index-main{
+.index-main {
     display: flex;
     column-gap: 2vh;
     height: 95vh;
@@ -30,19 +30,20 @@ body {
 .bill-section,
 .total-income-section {
     background: white;
-    /* width: 43vh; */
+    width: 39vh;
     display: inline-block;
     border-radius: 7px;
     box-shadow: -1px 1px 1px #e3e3e3, 1px -1px 2px rgb(231 231 231 / 51%);
     box-sizing: border-box;
     padding: 19px 32px;
+    position: relative
 }
 
 .total-income-section {
     flex: 1
 }
 
-.main-section_right{
+.main-section_right {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -50,7 +51,8 @@ body {
     font-size: 0.7rem
 }
 
-.graph-section, .expense-section{
+/*  .expense-section */
+.graph-section {
     background: white;
     display: inline-block;
     height: 100%;
@@ -59,18 +61,40 @@ body {
     padding: 10px 24px;
 }
 
-.graph-section{
-    height: 100%;
-    flex: 5
-}
-
 .expense-section {
-   height: 100%;
-   flex: 5
+    padding: 13px 32px;
 }
 
-.title{
+.graph-section {
+    height: 100%;
+    flex: 4.7
+}
+
+
+.title {
     font-weight: 500;
     letter-spacing: 0.8px;
 }
 
+.expense-section {
+    height: auto;
+    flex: 3;
+    background: white;
+    box-shadow: -1px 1px 1px #e3e3e3, 1px -1px 2px #e7e7e782;
+    border-radius: 7px;
+}
+
+.goals-section {
+    flex: 2;
+    background: white;
+    box-shadow: -1px 1px 1px #e3e3e3, 1px -1px 2px #e7e7e782;
+    border-radius: 7px;
+}
+
+.expenses-and-goals-section {
+    display: flex;
+    height: 100%;
+    column-gap: 2vh;
+    flex: 5;
+    /* padding: 10px 24px; */
+}
