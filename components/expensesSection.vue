@@ -1,6 +1,28 @@
 <template>
   <section class="expense-section">
-    <h3 class="title">EXPENSE SECTION</h3>
+    <div class="expense-section-top">
+      <h3 class="title">EXPENSE SECTION</h3>
+      <img
+        src="../assets/images/edit-icon.png"
+        key="1"
+        v-show="!hoveringOverEditIcon && !editingExpense"
+        alt="Edit icon"
+        class="edit-icon"
+        title="Edit icon by icons8"
+        @mouseover="hoveringOverEditIcon = true"
+        @click="editingExpense = !editingExpense"
+      />
+      <img
+        src="../assets/images/edit-icon2.png"
+        key="2"
+        v-show="hoveringOverEditIcon || editingExpense"
+        alt="Edit icon"
+        class="edit-icon"
+        title="Edit icon by icons8"
+        @mouseleave="hoveringOverEditIcon = false"
+        @click="editingExpense = !editingExpense"
+      />
+    </div>
     <div class="expenses-section_title">
       <h4 class="expenses-section_title_date">Date</h4>
       <h4 class="expenses-section_title_descr">Description</h4>
@@ -8,128 +30,187 @@
       <h4 class="expenses-section_title_amount">Amount</h4>
     </div>
     <div class="expenses-section_line"></div>
-    <article>
-      <div class="expense-item-wrapper">
-        <h4 class="expenses-item-date">09/08/2022</h4>
-        <h4 class="expenses-item-descr">Bought a new car</h4>
-        <h4 class="expenses-item-type">
-          <div class="type-color-background"></div>
-          Entertainment
-        </h4>
-        <h4 class="expenses-item-amount">$500</h4>
-      </div>
-      <div class="expenses-section_line"></div>
-    </article>
 
+    <section class="expenses-wrapper">
+      <!--List of expenses -->
+      <TransitionGroup tag="div" name="expense-list">
+        <article v-for="expense in expensesList" :key="expense.key">
+        <div class="expense-item-wrapper">
+          <Transition name="slide-in" tag="div">
+            <img
+              src="../assets/images/remove-icon.png"
+              alt="Remove icon"
+              class="remove-expense-btn"
+              v-show="editingExpense"
+              @click="removeExpense(expense)"
+            />
+          </Transition>
+          <h4
+            class="expenses-item-date"
+            :class="{ 'editing-expense-item': editingExpense }"
+          >
+            {{ expense.dateAdded }}
+          </h4>
+          <h4 class="expenses-item-descr">{{ expense.expenseSource }}</h4>
+          <h4 class="expenses-item-type">
+            <div
+              class="type-color-background"
+              :class="`expenseType${expense.expenseType}`"
+            ></div>
+            {{ expense.expenseType }}
+          </h4>
+          <h4 class="expenses-item-amount">${{ expense.expenseAmount }}</h4>
+        </div>
+        <div class="expenses-section_line"></div>
+      </article>
+      </TransitionGroup>
+    </section>
+    
+    <Transition name="slide-out" mode="out-in">
     <!-- ADD expenses section -->
-    <section class="add-expense">
+    <section class="add-expense" v-if="!editingExpense">
       <div>
         <label for="input-expense">Source: </label>
-        <br>
-      <input type="text" name="" id="input-expense">
+        <br />
+        <input
+          type="text"
+          name=""
+          id="input-expense"
+          v-model="inputExpenseSource"
+        />
       </div>
       <div>
         <label for="input-expense">Type: </label>
-        <br>
-      <input type="text" name="" id="input-expense">
+        <br />
+        <!-- <input type="text" name="" id="input-expense"> -->
+        <select
+          name=""
+          id="expense-type"
+          class="expense-type"
+          v-model="inputExpenseType"
+        >
+          <option value="Entertainment">Entertainment</option>
+          <option value="Food">Food</option>
+          <option value="College">College</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Other">Other</option>
+        </select>
       </div>
       <div>
-        
         <label for="input-expense">Amount: </label>
-        <br>
-      <input type="text" name="" id="input-expense">
-        </div>
+        <br />
+        <input
+          type="text"
+          name=""
+          id="input-expense"
+          v-model.number="inputExpenseAmount"
+        />
+      </div>
+      <button class="add-expenses-changes" @click="addExpenses">Add</button>
+      <!-- v-else here -->
     </section>
+      <button class="save-expenses-changes" v-else @click="saveExpensesChanges">Save</button>
+      </Transition>
   </section>
 </template>
 
+<script>
+import { getDatabase, push, ref, set } from "@firebase/database";
+import { onValue } from "@firebase/database";
+import { mapGetters } from "vuex";
+// import { set } from '@firebase/database';
+export default {
+  data() {
+    return {
+      inputExpenseSource: "test test",
+      inputExpenseType: "Entertainment",
+      inputExpenseAmount: 2424,
+      expensesList: [],
+      expenseColorEntertainment: "blue",
+      expenseColorEntertainment: "pink",
+      hoveringOverEditIcon: false,
+      editingExpense: false,
+    };
+  },
+
+  computed: {
+    ...mapGetters(["getUserID"]),
+    getDate() {
+      let currentDate = new Date();
+      let cDay = currentDate.getDate();
+      let cMonth = currentDate.getMonth() + 1;
+      let cYear = currentDate.getFullYear();
+      return `${cDay}/${cMonth}/${cYear}`;
+    },
+
+    
+    expenseListFirebaseFormat(){
+      let firebaseFormat = {};
+
+      let expensesList = this.expensesList.reverse();
+      expensesList.forEach((data) => {
+        firebaseFormat[data.key] = {
+          expenseSource: data.expenseSource,
+          expenseAmount: data.expenseAmount,
+          expenseType: data.expenseType,
+          dateAdded: data.dateAdded,
+        };
+      });
+
+      return firebaseFormat;
+    }
+  },
+
+  methods: {
+    addExpenses() {
+      const db = getDatabase();
+      let _this = this;
+      push(ref(db, "users/" + _this.getUserID + "/expenses/"), {
+        expenseSource: _this.inputExpenseSource,
+        expenseType: _this.inputExpenseType,
+        expenseAmount: _this.inputExpenseAmount,
+        dateAdded: _this.getDate,
+      });
+
+      this.loadExpenses();
+    },
+
+    loadExpenses() {
+      console.log("loading expenses data");
+      const db = getDatabase();
+      const incomeDataRef = ref(db, "users/" + this.getUserID + "/expenses");
+      let _this = this;
+      onValue(incomeDataRef, (snapshot) => {
+        this.expensesList = [];
+        const data = snapshot.val();
+        for (const key in data) {
+          data[key].key = key;
+          _this.expensesList.unshift(data[key]);
+          console.log("expenses", this.expensesList);
+        }
+      });
+    },
+
+    saveExpensesChanges(){
+        const db = getDatabase();
+      let _this = this;
+      set(ref(db, "users/" + _this.getUserID + "/expenses"), _this.expenseListFirebaseFormat);
+      this.loadExpenses();
+       this.editingExpense = false;
+    },
+
+    removeExpense(expense){
+       this.expensesList = this.expensesList.filter((data) => data.key !== expense.key);
+      //  this.saveExpensesChanges()
+    }
+  },
+
+  mounted() {
+    this.loadExpenses();
+  },
+};
+</script>
+
 <style scoped>
-.title {
-  font-weight: 500;
-}
-.expenses-section_title,
-.expense-item-wrapper {
-  display: flex;
-}
-
-h4[class^="expenses-section_title"] {
-  font-weight: 400;
-}
-
-.expense-item-wrapper h4 {
-  font-weight: 300;
-}
-
-.expenses-section_title_date,
-.expenses-item-date {
-  flex: 1;
-}
-
-.expenses-section_title_descr,
-.expenses-item-descr {
-  flex: 1.5;
-}
-
-.expenses-section_title_type,
-.expenses-item-type {
-  flex: 1;
-}
-
-.expenses-item-type {
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-}
-
-.expenses-section_title_amount,
-.expenses-item-amount {
-  flex: 0.5;
-}
-
-.expenses-type-color {
-  height: 10px;
-  width: 10px;
-  border-radius: 30px;
-  background: pink;
-}
-
-.entertainment {
-  position: relative;
-}
-
-.type-color-background {
-  height: 10px;
-  width: 10px;
-  background: #ff8302;
-  top: 0px;
-  border-radius: 10px;
-}
-
-.expenses-section_line {
-  height: 0.5px;
-  background: lightgray;
-  width: 100%;
-}
-
-.add-expense{
-display: flex;
-    position: absolute;
-    bottom: 27px;
-    column-gap: 30px;
-}
-
-.expense-section{
-  position: relative
-}
-
-
-/* .entertainment::after{
-  position: absolute;
-  content: '';
-  height: 10px;
-  width: 10px;
-  background: pink;
-  top: 0px;
-  left: -12px
-} */
+@import url("../assets/styles/expenses-section.css");
 </style>

@@ -157,8 +157,6 @@ export default Vue.extend({
           dateAdded: this.getDate,
         });
         this.loadIncomeData();
-        // this.inputIncomeAmount = 0;
-        // this.inputIncomeSource = ''
       } else {
         // !Handle inccomplete input
         console.log("Unsuccessful yay");

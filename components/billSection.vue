@@ -31,8 +31,8 @@
 
     <!-- LIST BILLS -->
 
-    <TransitionGroup tag="div" name="bill-list" class="bill-list-wrapper">
-      <div v-for="(bill, index) in billList" :key="index">
+    <TransitionGroup tag="div" name="bill-list">
+      <div v-for="(bill, index) in billList" :key="index"  class="bill-list-wrapper">
         <article class="bill-section_header">
           <Transition name="slide-in">
             <img
@@ -57,7 +57,7 @@
     <!-- ADD BILL -->
     <!-- <article> -->
     <Transition name="bill-progress" mode="out-in">
-      <section v-if="!editingBill">
+      <section v-if="!editingBill" class="add-bill" >
         <Transition name="bill-progress" mode="out-in">
           <article class="add-bill" v-if="!billBasicsAdded" key="Basics">
             <div>
@@ -99,16 +99,16 @@
               </select>
             </div>
             <div>
-              <button class="add-bill-btn" @click="addBill">
+              <button class="add-bill-btn add-bill"  @click="addBill" >
                 <img src="~/assets/images/plus-icon.png" alt="Plus icon" />
               </button>
             </div>
           </article>
         </Transition>
       </section>
-      <article v-else>
+      <section v-else key="2" class="add-bill">
         <button class="save-bill-changes" @click="saveBillChanges">Save</button>
-      </article>
+      </section>
     </Transition>
     <!-- </article> -->
   </section>

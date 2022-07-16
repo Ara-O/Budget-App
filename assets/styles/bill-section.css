@@ -41,7 +41,7 @@ input:focus {
     align-items: center;
     justify-content: space-between;
     position:absolute;
-    bottom: 27px
+    bottom: 14px
 }
 
 .add-bill label {
@@ -173,7 +173,7 @@ input:focus {
 }
 
 .editing-bill-item {
-    transform: translateX(50px);
+    transform: translateX(37px);
 }
 
 .bill-section_header,
@@ -206,9 +206,12 @@ input:focus {
     color: white;
     width: 70px;
     border: 0px;
+    position: absolute;
     border-radius: 5px;
     font-family: 'Poppins';
     font-size: 12px;
     box-shadow: 0px 0px 2px lightgrey;
-    cursor: pointer
+    cursor: pointer;
+    bottom: 14px;
+
 }
