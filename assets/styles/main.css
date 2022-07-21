@@ -61,9 +61,7 @@ body {
     padding: 10px 24px;
 }
 
-.expense-section {
-    padding: 13px 32px;
-}
+
 
 .graph-section {
     height: 100%;
@@ -77,8 +75,9 @@ body {
 }
 
 .expense-section {
+    padding: 13px 32px;
     height: auto;
-    flex: 3;
+    flex: 4;
     background: white;
     box-shadow: -1px 1px 1px #e3e3e3, 1px -1px 2px #e7e7e782;
     border-radius: 7px;

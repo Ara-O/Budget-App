@@ -11,7 +11,7 @@
       <graph></graph>
       <div class="expenses-and-goals-section">
         <expenses-section> </expenses-section>
-        <div class="goals-section"><h3>hello</h3></div>
+        <user-goals></user-goals>
       </div>
     </section>
   </main>
@@ -55,6 +55,6 @@ export default Vue.extend({
 html {
   background-color: #f2f5f7 !important;
   padding: 1.4vh 2vh;
-  overflow: hidden;
+  overflow: auto;
 }
 </style> 
