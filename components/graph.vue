@@ -15,18 +15,44 @@
           <h4>TOTAL BILLS</h4>
           <h3>${{ totalBills }}</h3>
         </div>
+        <div class="total-income" v-if="visibleData === 'expenses'">
+          <h4>TOTAL EXPENSES</h4>
+          <h3>${{ totalExpenses }}</h3>
+        </div>
+        <!-- Make tital expenses -->
+        <div class="total-income" v-if="visibleData === 'combined'">
+          <h4>NET INCOME</h4>
+          <!-- Make tital expenses -->
+          <h3>${{ netEarnings }}</h3>
+        </div>
         <div class="all-available-data">
-          <div class="available-data-button" @click="visibleData = 'income'" :class="{selected: visibleData === 'income'}">
+          <div
+            class="available-data-button"
+            @click="visibleData = 'income'"
+            :class="{ selected: visibleData === 'income' }"
+          >
             <h4>Income</h4>
           </div>
-          <div class="available-data-button" @click="visibleData = 'bills'" :class="{selected: visibleData === 'bills'}">
+          <div
+            class="available-data-button"
+            @click="visibleData = 'bills'"
+            :class="{ selected: visibleData === 'bills' }"
+          >
             <h4>Bills</h4>
           </div>
-          <div class="available-data-button" @click="visibleData = 'expenses'" :class="{selected: visibleData === 'expenses'}">
+          <div
+            class="available-data-button"
+            @click="visibleData = 'expenses'"
+            :class="{ selected: visibleData === 'expenses' }"
+          >
             <h4>Expenses</h4>
           </div>
-          <div class="available-data-button" @click="visibleData = 'net'" :class="{selected: visibleData === 'net'}">
-            <h4>Net</h4>
+          <div
+            class="available-data-button"
+            @click="visibleData = 'combined'"
+            :class="{ selected: visibleData === 'combined' }"
+          >
+            <h4>Combined</h4>
           </div>
         </div>
       </section>
@@ -38,22 +64,28 @@
 //lazy loading component
 const income = () => import("./incomeGraph.vue");
 const bills = () => import("./billGraph.vue");
+const expenses = () => import("./expensesGraph.vue");
+const combined = () => import("./combinedGraph.vue");
 import { getDatabase, ref, onValue } from "firebase/database";
 import { mapGetters } from "vuex";
 export default {
   components: {
     income,
-    bills
+    bills,
+    expenses,
+    combined,
   },
   data() {
     return {
-      visibleData: "bills",
+      visibleData: "combined",
       totalIncome: 0,
       totalBills: 0,
+      totalExpenses: 0,
+      netEarnings: 0,
     };
   },
 
-    computed: {
+  computed: {
     ...mapGetters(["getUserID"]),
   },
 
@@ -70,12 +102,12 @@ export default {
           total += Number(data[key].incomeAmount);
         }
 
-        console.log('this is the total - ', total)
+        console.log("this is the total - ", total);
         this.totalIncome = total;
       });
     },
 
-    calculateBillsIncome() {
+    calculateTotalBills() {
       const db = getDatabase();
       const totalBillsRef = ref(db, "users/" + this.getUserID + "/bills");
 
@@ -87,15 +119,57 @@ export default {
           total += Number(data[key].amount);
         }
 
-        console.log('this is the total - ', total)
+        console.log("this is the total - ", total);
         this.totalBills = total;
       });
     },
-  },
 
+    calculateTotalExpenes() {
+      const db = getDatabase();
+      const expensesRef = ref(db, "users/" + this.getUserID + "/expenses");
+
+      //Retrieve total income and add all of it
+      onValue(expensesRef, (snapshot) => {
+        let total = 0;
+        let data = snapshot.val();
+        for (const key in data) {
+          total += Number(data[key].expenseAmount);
+        }
+
+        console.log("this is the total - ", total);
+        this.totalExpenses = total;
+      });
+    },
+    calculateNetIncome() {
+      const db = getDatabase();
+      const dataRef = ref(db, "users/" + this.getUserID);
+      let _this = this;
+      onValue(dataRef, (snapshot) => {
+        _this.netEarnings = 0;
+        let data = snapshot.val();
+        for (const key in data) {
+          console.error(data[key])
+          if (key === "expenses") {
+            for (const key2 in data[key]) {
+              _this.netEarnings -= data[key][key2].expenseAmount;
+            }
+          }
+          if (key === "income") {
+            for (const key2 in data[key]) {
+              _this.netEarnings += data[key][key2].incomeAmount;
+            }
+          }
+        }
+
+        console.error(_this.netEarnings);
+      });
+    },
+  },
   mounted() {
     this.calculateTotalIncome();
-    this.calculateBillsIncome()
+    this.calculateTotalBills();
+    this.calculateTotalExpenes();
+    this.calculateNetIncome();
   },
 };
 </script>
@@ -146,7 +220,7 @@ export default {
 .total-income h3 {
   margin-top: 0px;
   font-size: 16px;
-  font-weight:  400;
+  font-weight: 400;
 }
 
 .available-data-button {
@@ -165,7 +239,7 @@ export default {
   background-color: #468c5f;
 }
 
-.selected{
+.selected {
   color: white;
   background-color: #468c5f;
 }

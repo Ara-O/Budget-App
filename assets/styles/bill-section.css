@@ -95,7 +95,7 @@ input:focus {
 }
 
 .bill-list-wrapper {
-    height: 123px;
+    /* height: 123px; */
     overflow: auto;
 }
 
