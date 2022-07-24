@@ -61,7 +61,6 @@ export default {
       const billDataRef = ref(db, "users/" + this.getUserID + "/bills");
       let _this = this;
       onValue(billDataRef, (snapshot) => {
-        console.log("loading bill data for graph");
         _this.billData = snapshot.val();
         _this.generateGraphData();
         _this.calculateBillFrequency()
@@ -115,10 +114,7 @@ export default {
     },
 
     calculateBillFrequency(){
-      console.log(this.billData)
       for(const key in this.billData){
-        console.log(this.billData[key].frequency)
-        console.log(this.billData[key].amount)
          if(this.billData[key].frequency === "Weekly"){
           this.billFrequency.weekly += this.billData[key].amount
          }
@@ -129,11 +125,9 @@ export default {
           this.billFrequency.bimonthly += this.billData[key].amount
          }
          if(this.billData[key].frequency === "Monthly"){
-          console.log('yas')
           this.billFrequency.monthly += this.billData[key].amount
          }
       }
-    console.log(this.billFrequency)
     }
   },
 

@@ -168,7 +168,6 @@ export default Vue.extend({
     },
 
     removeBill(bill) {
-      console.log(bill);
       this.billList = this.billList.filter((data) => data.key !== bill.key);
     },
 
@@ -228,7 +227,6 @@ export default Vue.extend({
     },
 
     loadBillData() {
-      console.log("Loading bill data");
       const db = getDatabase();
       const billDataRef = ref(db, "users/" + this.getUserID + "/bills");
       let _this = this;

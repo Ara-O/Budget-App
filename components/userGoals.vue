@@ -1,6 +1,6 @@
 <template>
   <div class="goals-section">
-    <h3>Current Goals</h3>
+    <h3>Current Goal: ${{ userGoal }}</h3>
     <div class="progress-section">
       <div class="ticks">
         <div class="tick-25">
@@ -16,94 +16,107 @@
           <div class="tick-height"></div>
         </div>
       </div>
-      <progress class="current-goal-progress" value="39" max="100">
-        32%
-      </progress>
+      <progress
+        class="current-goal-progress"
+        :value="percentageOfGoals"
+        max="100"
+      ></progress>
     </div>
 
     <!-- Divider -->
-    <br><br>
+    <br /><br />
     <div class="divider"></div>
-    <br><br>
+    <br /><br />
 
     <!-- Sign out -->
-    <div style="display: flex; align-items: center; column-gap: 10px; cursor: pointer">
-        <h3>Sign Out</h3>
-        <img src="../assets/images/sign-out-icon.png" alt="Sign out icon from icons8" class="sign-out-icon">
+    <div class="set-goal">
+      <h3>Set Goal:</h3>
+      <input type="number" class="input-set-goal" v-model.number="userGoal" />
+      <button class="set-goal-btn" @click="setUserGoal">Set</button>
+      <h3>Sign Out</h3>
+      <img
+        src="../assets/images/sign-out-icon.png"
+        alt="Sign out icon from icons8"
+        class="sign-out-icon"
+      />
     </div>
   </div>
 </template>
 
+<script>
+import { mapGetters } from "vuex";
+import { getDatabase, ref, onValue, set } from "firebase/database";
+
+export default {
+  data() {
+    return {
+      userGoal: 0,
+      percentageOfGoals: 0,
+    };
+  },
+
+  computed: {
+    ...mapGetters(["getUserID"]),
+  },
+
+  methods: {
+    setUserGoal() {
+      const db = getDatabase();
+      set(ref(db, "users/" + this.getUserID + "/userGoals"), this.userGoal);
+    },
+
+    getUserGoal() {
+      let _this = this;
+      const db = getDatabase();
+      const dataRef = ref(db, "users/" + this.getUserID + "/userGoals");
+      onValue(dataRef, (snapshot) => {
+        let data = snapshot.val();
+        _this.userGoal = data;
+      });
+    },
+
+    calculatePercentOfCurrentGoal() {
+      const db = getDatabase();
+      const dataRef = ref(db, "users/" + this.getUserID);
+      let _this = this;
+      onValue(dataRef, (snapshot) => {
+        _this.percentageOfGoals = 0;
+        let netIncome = 0;
+        let data = snapshot.val();
+        for (const key in data) {
+          if (key === "expenses") {
+            for (const key2 in data[key]) {
+              netIncome -= data[key][key2].expenseAmount;
+            }
+          }
+          if (key === "income") {
+            for (const key2 in data[key]) {
+              netIncome += data[key][key2].incomeAmount;
+            }
+          }
+        }
+
+        let percentage = (netIncome / this.userGoal) * 100;
+
+
+        if (percentage < 25) {
+          _this.percentageOfGoals = 0;
+        } else if (percentage > 100) {
+          _this.percentageOfGoals = 100;
+        } else {
+          _this.percentageOfGoals = percentage;
+        }
+      });
+    },
+  },
+
+  mounted() {
+    this.getUserGoal();
+    this.calculatePercentOfCurrentGoal();
+  },
+};
+</script>
+
+
 <style scoped>
-.goals-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.goals-section h3 {
-  font-weight: 400;
-}
-
-.current-goal-progress {
-  /* height: 55px; */
-  accent-color: #468c5f;
-}
-
-.current-goal-progress {
-  border: 0;
-  height: 40px;
-  border-radius: 20px;
-  width: 20vw;
-}
-.current-goal-progress::-webkit-progress-bar {
-  border: 0;
-  height: 40px;
-  border-radius: 20px;
-  background: #42865a97;
-}
-.current-goal-progress::-webkit-progress-value {
-  border: 0;
-  height: 40px;
-  border-radius: 20px;
-}
-.current-goal-progress::-moz-progress-bar {
-  border: 0;
-  height: 40px;
-  border-radius: 20px;
-}
-
-.tick-height {
-  height: 20px;
-  background: #b7b7b7;
-  width: 1px;
-}
-
-.ticks {
-  display: flex;
-  justify-content: space-around;
-}
-
-.tick-25 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ticks div h4 {
-  margin-bottom: 0px;
-  font-weight: 400;
-}
-
-.divider{
-    height: 5px;
-    width: 270px;
-    background: #42865a97;
-    border-radius: 10px;
-}
-
-.sign-out-icon{
-    width: 15px;
-}
-</style>
+@import url("../assets/styles/user-goals.css");</style>

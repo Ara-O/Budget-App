@@ -117,7 +117,6 @@ export default Vue.extend({
       this.incomeList.forEach((data) => {
         incomeListFormatted.unshift(data);
       });
-      console.log(incomeListFormatted);
       return incomeListFormatted;
     },
 
@@ -148,7 +147,6 @@ export default Vue.extend({
   methods: {
     addIncome() {
       if (validateEntries(this.inputIncomeSource, this.inputIncomeSource)) {
-        console.log("successful yay!");
         let _this = this;
         const db = getDatabase();
         push(ref(db, "users/" + _this.getUserID + "/income"), {
@@ -159,12 +157,10 @@ export default Vue.extend({
         this.loadIncomeData();
       } else {
         // !Handle inccomplete input
-        console.log("Unsuccessful yay");
       }
     },
 
     loadIncomeData() {
-      console.log("loading income data");
       const db = getDatabase();
       const incomeDataRef = ref(db, "users/" + this.getUserID + "/income");
       let _this = this;
@@ -180,7 +176,6 @@ export default Vue.extend({
     },
 
     removeIncome(income) {
-      console.log(income);
       this.incomeList = this.incomeList.filter(
         (data) => data.key !== income.key
       );

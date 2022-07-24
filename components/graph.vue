@@ -102,7 +102,6 @@ export default {
           total += Number(data[key].incomeAmount);
         }
 
-        console.log("this is the total - ", total);
         this.totalIncome = total;
       });
     },
@@ -119,7 +118,6 @@ export default {
           total += Number(data[key].amount);
         }
 
-        console.log("this is the total - ", total);
         this.totalBills = total;
       });
     },
@@ -135,8 +133,6 @@ export default {
         for (const key in data) {
           total += Number(data[key].expenseAmount);
         }
-
-        console.log("this is the total - ", total);
         this.totalExpenses = total;
       });
     },
@@ -148,7 +144,6 @@ export default {
         _this.netEarnings = 0;
         let data = snapshot.val();
         for (const key in data) {
-          console.error(data[key])
           if (key === "expenses") {
             for (const key2 in data[key]) {
               _this.netEarnings -= data[key][key2].expenseAmount;
@@ -160,8 +155,6 @@ export default {
             }
           }
         }
-
-        console.error(_this.netEarnings);
       });
     },
   },

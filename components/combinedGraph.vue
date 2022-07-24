@@ -28,7 +28,6 @@ export default {
 
   methods: {
     retrieveData() {
-      console.log("retrieveign data");
       const db = getDatabase();
       const dataRef = ref(db, "users/" + this.getUserID);
       let totalIncomeData = {};
@@ -37,7 +36,6 @@ export default {
       onValue(dataRef, (snapshot) => {
         let data = snapshot.val();
         for (const key in data) {
-          console.log(key);
           // totalData[key] = data
           if (key === "income") {
             totalIncomeData = data[key];
@@ -46,8 +44,7 @@ export default {
             totalExpenseData = data[key];
           }
         }
-        console.log("TOTALY INCOME DATA - ", totalIncomeData);
-        console.log("TOTALY EXPENSE DATA - ", totalExpenseData);
+
         this.incomeData = totalIncomeData;
         this.expenseData = totalExpenseData;
         _this.generateGraphData()
@@ -109,7 +106,6 @@ export default {
     },
 
     loadGraph() {
-      console.log("loading graph: ", this.graphDataExpense)
       Chart.defaults.font.size = 11;
       Chart.defaults.color = "rgb(0, 0, 0)";
       Chart.defaults.font.weight = "400";

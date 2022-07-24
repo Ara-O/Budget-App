@@ -29,7 +29,6 @@ export default {
       const incomeDataRef = ref(db, "users/" + this.getUserID + "/income");
       let _this = this;
       onValue(incomeDataRef, (snapshot) => {
-        console.log("loading income data for graph");
         _this.incomeData = snapshot.val();
         _this.generateGraphData();
       });

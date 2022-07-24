@@ -84,7 +84,6 @@ export default {
         }).catch((err)=> {
           this.loading = false;
           this.loadingError = true;
-          console.log(err.message)
         });
       } else {
         this.missingField = false;

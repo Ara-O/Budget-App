@@ -1,0 +1,127 @@
+.set-goal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20vw;
+    column-gap: 10px;
+    cursor: pointer;
+}
+
+.input-set-goal {
+    height: 27px;
+    font-family: "Poppins";
+    border-width: 0px;
+    border-bottom-width: 1px;
+    font-size: 12px;
+    font-weight: 300;
+    width: 70px;
+}
+
+.input-set-goal:focus {
+    outline: 0;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+
+.goals-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.goals-section h3 {
+    font-weight: 400;
+}
+
+.set-goal-btn {
+    height: 31px;
+    width: 50px;
+    font-weight: 500;
+    justify-content: center;
+    border-radius: 6px;
+    display: flex;
+    border: solid 1px #468c5f;
+    font-family: "Poppins";
+    font-weight: 300;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 250ms linear, color 250ms linear;
+    background-color: #468c5f;
+    color: white;
+    border-color: #468c5f;
+    border-style: solid;
+    border-width: 2.5px;
+}
+
+.set-goal-btn:hover {
+    color: #468c5f;
+    background-color: white;
+    border-color: #468c5f;
+    border-style: solid;
+    border-width: 2.5px;
+}
+
+.current-goal-progress {
+    /* height: 55px; */
+    accent-color: #468c5f;
+}
+
+.current-goal-progress {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+    width: 20vw;
+}
+
+.current-goal-progress::-webkit-progress-bar {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+    background: #42865a97;
+}
+
+.current-goal-progress::-webkit-progress-value {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.current-goal-progress::-moz-progress-bar {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.tick-height {
+    height: 20px;
+    background: #b7b7b7;
+    width: 1px;
+}
+
+.ticks {
+    display: flex;
+    justify-content: space-around;
+}
+
+.tick-25 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ticks div h4 {
+    margin-bottom: 0px;
+    font-weight: 400;
+}
+
+.divider {
+    height: 5px;
+    width: 270px;
+    background: #42865a97;
+    border-radius: 10px;
+}
+
+.sign-out-icon {
+    width: 15px;
+}

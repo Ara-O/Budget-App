@@ -176,7 +176,6 @@ export default {
     },
 
     loadExpenses() {
-      console.log("loading expenses data");
       const db = getDatabase();
       const incomeDataRef = ref(db, "users/" + this.getUserID + "/expenses");
       let _this = this;
@@ -186,7 +185,6 @@ export default {
         for (const key in data) {
           data[key].key = key;
           _this.expensesList.unshift(data[key]);
-          console.log("expenses", this.expensesList);
         }
       });
     },

@@ -59,7 +59,6 @@ export default {
     validateEntry(...allFields){
       allFields.forEach((el)=> {
         if(el.trim()=== ''){
-          console.log("emtpy")
           this.missingField = true;
         } 
       });
@@ -79,7 +78,6 @@ export default {
         }).catch((err)=> {
           this.loading = false;
           this.loadingError = true;
-          console.log(err.message)
         });
       }
     },

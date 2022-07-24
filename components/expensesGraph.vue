@@ -29,7 +29,6 @@ export default {
       const expenseDataRef = ref(db, "users/" + this.getUserID + "/expenses");
       let _this = this;
       onValue(expenseDataRef, (snapshot) => {
-        console.log("loading expense data for graph");
         _this.expenseData = snapshot.val();
         _this.generateGraphData();
       });

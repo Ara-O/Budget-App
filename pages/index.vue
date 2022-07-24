@@ -17,10 +17,9 @@
   </main>
 </template>
 
-<script lang="ts">
+<script>
 import { userIsSignedIn } from "../modules/firebaseServices.js";
-import Vue from "vue";
-export default Vue.extend({
+export default{
   head() {
     return {
       title: "Save Money!",
@@ -39,10 +38,9 @@ export default Vue.extend({
       })
       .catch((err) => {
         this.$router.push("/signup");
-        console.log(err);
       });
   },
-});
+};
 </script>
 
  <style scoped>
