@@ -17,7 +17,6 @@
           id="email"
           ref="email"
           class="form-input"
-          value="oladipoara@gmail.com"
         />
         <br />
         <label for="password">Password: </label> <br />
@@ -26,7 +25,6 @@
           id="password"
           ref="password"
           class="form-input"
-          value="vrewepnqpwe"
         />
         <NuxtLink to="/login"
           ><h5 class="already-have-account">

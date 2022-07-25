@@ -101,8 +101,8 @@ export default Vue.extend({
   data() {
     return {
       incomeList: [],
-      inputIncomeSource: "test" as string,
-      inputIncomeAmount: 40 as number,
+      inputIncomeSource: "" as string,
+      inputIncomeAmount: 0 as number,
       hoveringOverEditIcon: false,
       editingIncome: false as boolean,
     };

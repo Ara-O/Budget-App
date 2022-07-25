@@ -53,6 +53,6 @@ export default{
 html {
   background-color: #f2f5f7 !important;
   padding: 1.4vh 2vh;
-  overflow: auto;
+  overflow: hidden;
 }
 </style> 

@@ -122,12 +122,10 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      inputExpenseSource: "test test",
-      inputExpenseType: "Entertainment",
-      inputExpenseAmount: 2424,
+      inputExpenseSource: "",
+      inputExpenseType: "",
+      inputExpenseAmount: 0,
       expensesList: [],
-      expenseColorEntertainment: "blue",
-      expenseColorEntertainment: "pink",
       hoveringOverEditIcon: false,
       editingExpense: false,
     };

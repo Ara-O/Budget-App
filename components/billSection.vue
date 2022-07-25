@@ -126,8 +126,8 @@ export default Vue.extend({
       hoveringOverEditIcon: false,
       editingBill: false,
       billList: [],
-      inputBillSource: "Test" as string,
-      inputBillAmount: 40 as number,
+      inputBillSource: "" as string,
+      inputBillAmount: 0 as number,
       inputBillFrequency: "" as string,
       billBasicsAdded: false as boolean,
     };

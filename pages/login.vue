@@ -11,7 +11,7 @@
       <section class="signup-section">
         <h3 class="signup-section_title">Log in!</h3>
         <label for="email">Email Address: </label> <br />
-        <input type="text" name="" id="email" ref="email" class="form-input" value="oladipoara@gmail.com"/>
+        <input type="text" name="" id="email" ref="email" class="form-input" />
         <br />
         <label for="password">Password: </label> <br />
         <input
@@ -19,7 +19,6 @@
           id="password"
           ref="password"
           class="form-input"
-          value="vrewepnqpwe"
         />
        <NuxtLink to="/signup"><h5 class="already-have-account">I don't have an account</h5></NuxtLink> 
         <button class="sign-up-btn" type="submit" @click="logInUser">
