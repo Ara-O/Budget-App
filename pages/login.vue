@@ -25,7 +25,7 @@
           Log In
         </button>
         <h5 v-if="missingField" style="font-weight: 300">There is one or more missing fields...</h5>
-        <h5 v-if="loading" style="font-weight: 300">Logging you in...</h5>
+        <h5 v-if="loading && loadingError" style="font-weight: 300">Logging you in...</h5>
         <h5 v-if="loadingError" style="font-weight: 300">There has been an error</h5>
       </section>
     </section>
@@ -38,7 +38,7 @@
 </style>
 
 <script>
-import { logInUser as logInUserFirebase } from '../modules/firebaseServices';
+import { logInUser as logInUserFirebase, setUpFirebase } from '../modules/firebaseServices';
 export default {
   head() {
     return {
@@ -80,6 +80,10 @@ export default {
         });
       }
     },
+  },
+
+    created(){
+    setUpFirebase(this)
   },
 
   mounted() {

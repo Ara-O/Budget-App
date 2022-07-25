@@ -1,6 +1,6 @@
 export const state = () => ({
     userID: "",
-    incomeData: {}
+    incomeData: {},
   })
   
   export const getters = {

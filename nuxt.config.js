@@ -38,11 +38,22 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    // '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
   ],
+
+  publicRuntimeConfig: {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.authDomain,
+    databaseURL: process.env.databaseURL,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId,
+    appId: process.env.appId
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

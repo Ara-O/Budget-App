@@ -1,21 +1,32 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-// import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-// dotenv.config()
-// import express from 'express'
-const firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: process.env.authDomain,
-    databaseURL: process.env.databaseURL,
-    projectId: process.env.projectId,
-    storageBucket: process.env.storageBucket,
-    messagingSenderId: process.env.messagingSenderId,
-    appId: process.env.appId
-};
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+
+let app, auth;
+
+export function setUpFirebase(thisValue) {
+    const apiKey = thisValue.$config.apiKey;
+    const authDomain = thisValue.$config.authDomain;
+    const databaseURL = thisValue.$config.databaseURL;
+    const projectId = thisValue.$config.projectId;
+    const storageBucket = thisValue.$config.storageBucket;
+    const messagingSenderId = thisValue.$config.messagingSenderId;
+    const appId = thisValue.$config.appId;
+
+    const firebaseConfig = {
+        apiKey,
+        authDomain,
+        databaseURL,
+        projectId,
+        storageBucket,
+        messagingSenderId,
+        appId
+    };
+
+    // Initialize Firebase
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+}
 
 export function userIsSignedIn() {
     let getInfo = new Promise((resolve, reject) => {

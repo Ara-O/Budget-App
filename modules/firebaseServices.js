@@ -36,24 +36,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.logInUser = exports.registerUser = exports.userIsSignedIn = void 0;
+exports.logInUser = exports.registerUser = exports.userIsSignedIn = exports.setUpFirebase = void 0;
 var app_1 = require("firebase/app");
 var auth_1 = require("firebase/auth");
-// import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-// dotenv.config()
-// import express from 'express'
-var firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: process.env.authDomain,
-    databaseURL: process.env.databaseURL,
-    projectId: process.env.projectId,
-    storageBucket: process.env.storageBucket,
-    messagingSenderId: process.env.messagingSenderId,
-    appId: process.env.appId
-};
-// Initialize Firebase
-var app = (0, app_1.initializeApp)(firebaseConfig);
-var auth = (0, auth_1.getAuth)(app);
+var app, auth;
+function setUpFirebase(thisValue) {
+    var apiKey = thisValue.$config.apiKey;
+    var authDomain = thisValue.$config.authDomain;
+    var databaseURL = thisValue.$config.databaseURL;
+    var projectId = thisValue.$config.projectId;
+    var storageBucket = thisValue.$config.storageBucket;
+    var messagingSenderId = thisValue.$config.messagingSenderId;
+    var appId = thisValue.$config.appId;
+    var firebaseConfig = {
+        apiKey: apiKey,
+        authDomain: authDomain,
+        databaseURL: databaseURL,
+        projectId: projectId,
+        storageBucket: storageBucket,
+        messagingSenderId: messagingSenderId,
+        appId: appId
+    };
+    // Initialize Firebase
+    app = (0, app_1.initializeApp)(firebaseConfig);
+    auth = (0, auth_1.getAuth)(app);
+}
+exports.setUpFirebase = setUpFirebase;
 function userIsSignedIn() {
     var getInfo = new Promise(function (resolve, reject) {
         (0, auth_1.onAuthStateChanged)(auth, function (user) {

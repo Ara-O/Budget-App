@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { registerUser as registerUserFirebase } from "../modules/firebaseServices";
+import { registerUser as registerUserFirebase, setUpFirebase } from "../modules/firebaseServices";
 import { validateEntries } from "../modules/utilities.js";
 export default {
   // transition: "sign-up",
@@ -89,8 +89,13 @@ export default {
     },
   },
 
+  created(){
+    setUpFirebase(this)
+  },
+  
   mounted() {
     this.$refs.email.focus();
+    // console.log(this.$config.apiKey)
   },
 };
 </script>
