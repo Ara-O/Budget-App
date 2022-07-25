@@ -44,16 +44,6 @@ export default {
   modules: [
   ],
 
-  env: {
-    apiKey: "AIzaSyBKSK6_aC6WtsNZBx9DjvQnphOiE6SJbUc",
-    authDomain: "budgetapp-397ca.firebaseapp.com",
-    databaseURL: "https://budgetapp-397ca-default-rtdb.firebaseio.com",
-    projectId: "budgetapp-397ca",
-    storageBucket: "budgetapp-397ca.appspot.com",
-    messagingSenderId: "38139400553",
-    appId: "1:38139400553:web:41cf6539837c99906fadf8"
-  },
-
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }

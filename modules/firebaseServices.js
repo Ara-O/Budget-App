@@ -39,6 +39,9 @@ exports.__esModule = true;
 exports.logInUser = exports.registerUser = exports.userIsSignedIn = void 0;
 var app_1 = require("firebase/app");
 var auth_1 = require("firebase/auth");
+// import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+// dotenv.config()
+// import express from 'express'
 var firebaseConfig = {
     apiKey: process.env.apiKey,
     authDomain: process.env.authDomain,
