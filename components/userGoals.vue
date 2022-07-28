@@ -33,8 +33,9 @@
       <h3>Set Goal:</h3>
       <input type="number" class="input-set-goal" v-model.number="userGoal" />
       <button class="set-goal-btn" @click="setUserGoal">Set</button>
-      <h3>Sign Out</h3>
+      <h3 @click="signOut">Sign Out</h3>
       <img
+        @click="signOut"
         src="../assets/images/sign-out-icon.png"
         alt="Sign out icon from icons8"
         class="sign-out-icon"
@@ -45,6 +46,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import {signOutUser } from "../modules/firebaseServices";
 import { getDatabase, ref, onValue, set } from "firebase/database";
 
 export default {
@@ -108,7 +110,15 @@ export default {
         }
       });
     },
-  },
+
+    signOut(){
+      let _this = this;
+      signOutUser().then(()=> {
+        console.log("user signed out")
+        _this.$router.push("/signup")
+      })
+    }  
+    },
 
   mounted() {
     this.getUserGoal();

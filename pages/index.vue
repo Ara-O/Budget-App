@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { userIsSignedIn } from "../modules/firebaseServices.js";
+import { userIsSignedIn, setUpFirebase } from "../modules/firebaseServices.js";
 export default{
   head() {
     return {
@@ -31,8 +31,9 @@ export default{
     };
   },
   mounted() {
+    setUpFirebase(this)
     userIsSignedIn()
-      .then((res) => {
+      .then((res) => { 
         this.$store.commit("changeUserID", res);
         this.userIsSignedIn = true;
       })
@@ -52,7 +53,11 @@ export default{
 <style>
 html {
   background-color: #f2f5f7 !important;
-  padding: 1.4vh 2vh;
+  padding: 2vh 2vh;
   overflow: hidden;
+}
+
+body {
+  margin: 0px !important
 }
 </style> 

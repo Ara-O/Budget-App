@@ -41,7 +41,9 @@ input:focus {
     align-items: center;
     justify-content: space-between;
     position:absolute;
-    bottom: 14px
+    bottom: 14px;
+    padding-top: 0px;
+
 }
 
 .add-bill label {
@@ -49,7 +51,7 @@ input:focus {
 }
 
 .add-bill input {
-    width: 80px;
+    width: 70px;
     height: 27px;
     font-family: "Poppins";
     border-width: 0px;

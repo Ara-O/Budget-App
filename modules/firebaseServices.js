@@ -36,9 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.logInUser = exports.registerUser = exports.userIsSignedIn = exports.setUpFirebase = void 0;
+exports.signOutUser = exports.logInUser = exports.registerUser = exports.userIsSignedIn = exports.setUpFirebase = void 0;
 var app_1 = require("firebase/app");
 var auth_1 = require("firebase/auth");
+//Auth and app are initialized to nothing, so before we use firebase commands that require them, we need to run the setupFirebase function
+//which will then populate them with env variables and the good stuff we need.
 var app, auth;
 function setUpFirebase(thisValue) {
     var apiKey = thisValue.$config.apiKey;
@@ -118,3 +120,26 @@ function logInUser(email, password, this_value) {
     });
 }
 exports.logInUser = logInUser;
+function signOutUser() {
+    return __awaiter(this, void 0, void 0, function () {
+        var auth, userSignedOut, err_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    auth = (0, auth_1.getAuth)();
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, (0, auth_1.signOut)(auth)];
+                case 2:
+                    userSignedOut = _a.sent();
+                    return [2 /*return*/, userSignedOut];
+                case 3:
+                    err_3 = _a.sent();
+                    throw err_3;
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.signOutUser = signOutUser;
