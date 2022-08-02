@@ -77,7 +77,7 @@ export default {
   },
   data() {
     return {
-      visibleData: "combined",
+      visibleData: "income",
       totalIncome: 0,
       totalBills: 0,
       totalExpenses: 0,
@@ -133,7 +133,7 @@ export default {
         for (const key in data) {
           total += Number(data[key].expenseAmount);
         }
-        this.totalExpenses = total;
+        this.totalExpenses = total.toFixed(2);
       });
     },
     calculateNetIncome() {
@@ -155,6 +155,8 @@ export default {
             }
           }
         }
+
+        _this.netEarnings = _this.netEarnings.toFixed(2)
       });
     },
   },

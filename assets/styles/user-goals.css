@@ -1,9 +1,9 @@
 .set-goal {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 20vw;
-    column-gap: 10px;
+    column-gap: 24px;
     cursor: pointer;
 }
 
@@ -124,4 +124,52 @@
 
 .sign-out-icon {
     width: 15px;
+}
+
+
+.set-goal-text {
+    display: flex;
+    align-items: center;
+    column-gap: 12px
+}
+
+.sign-out-section {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    cursor: pointer;
+}
+
+@media (max-width: 1300px) {
+    .current-goal-progress {
+        width: 17vw
+    }
+
+    .divider {
+        width: 150px
+    }
+
+    .goals-section {
+        margin-bottom: 0px;
+    }
+
+    .set-goal-text {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .goals-section h3 {
+        margin: 0px;
+    }
+
+    .sign-out-section {
+        margin-top: 22px
+    }
+}
+
+@media (max-width: 1150px) {
+    .goals-section{
+        display: none;
+    }
+    
 }

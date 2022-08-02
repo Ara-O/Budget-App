@@ -1,12 +1,12 @@
 <template>
   <section class="bill-graph-section-items">
-    <section class="bill-graph-section-items_block_wrappper">
-      <div class="bill-graph-section-items_block">
+    <section class="bill-graph-section-items_block_wrappper disappear">
+      <div class="bill-graph-section-items_block disappear">
         <h4>Weekly</h4>
         <h5>${{this.billFrequency.weekly}}</h5>
         
       </div>
-      <div class="bill-graph-section-items_block">
+      <div class="bill-graph-section-items_block disappear">
         <h4>Bi-Weekly</h4>
         <h5>${{this.billFrequency.biweekly}}</h5>
       </div>
@@ -180,5 +180,21 @@ export default {
   justify-content: center;
   column-gap: 19px;
   align-items: center;
+}
+
+@media (max-width: 1260px) {
+  .disappear{
+    display: none;
+  }
+
+  /* .bill-graph-section-items{
+    width: 400px
+  } */
+
+  /* .bill-graph-section-items_block_wrappper {
+    width: 0px
+  } */
+
+
 }
 </style>

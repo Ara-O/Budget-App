@@ -30,9 +30,14 @@
 
     <!-- Sign out -->
     <div class="set-goal">
-      <h3>Set Goal:</h3>
-      <input type="number" class="input-set-goal" v-model.number="userGoal" />
+      <span class="set-goal-text">
+        <h3>Set Goal:</h3>
+        <input type="number" class="input-set-goal" v-model.number="userGoal" />
+      </span>
       <button class="set-goal-btn" @click="setUserGoal">Set</button>
+      <br />
+    </div>
+    <div  class="sign-out-section">
       <h3 @click="signOut">Sign Out</h3>
       <img
         @click="signOut"
@@ -46,7 +51,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {signOutUser } from "../modules/firebaseServices";
+import { signOutUser } from "../modules/firebaseServices";
 import { getDatabase, ref, onValue, set } from "firebase/database";
 
 export default {
@@ -100,7 +105,6 @@ export default {
 
         let percentage = (netIncome / this.userGoal) * 100;
 
-
         if (percentage < 25) {
           _this.percentageOfGoals = 0;
         } else if (percentage > 100) {
@@ -111,14 +115,14 @@ export default {
       });
     },
 
-    signOut(){
+    signOut() {
       let _this = this;
-      signOutUser().then(()=> {
-        console.log("user signed out")
-        _this.$router.push("/signup")
-      })
-    }  
+      signOutUser().then(() => {
+        console.log("user signed out");
+        _this.$router.push("/signup");
+      });
     },
+  },
 
   mounted() {
     this.getUserGoal();
@@ -129,4 +133,5 @@ export default {
 
 
 <style scoped>
-@import url("../assets/styles/user-goals.css");</style>
+@import url("../assets/styles/user-goals.css");
+</style>
