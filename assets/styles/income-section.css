@@ -184,3 +184,8 @@ input:focus{
   display: none;
 }
 
+@media (max-width: 960px) {
+  .add-income input{
+    width: 53px
+  }
+};

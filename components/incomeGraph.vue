@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 43vh">
+  <div style="width: 100%; height: 43vh; position: relative;">
     <canvas id="myChart" width="400" height="400"></canvas>
   </div>
 </template>
@@ -107,6 +107,7 @@ export default {
             },
           },
           maintainAspectRatio: false,
+          responsive:true,
           scales: {
             y: {
               suggestedMin: 0,

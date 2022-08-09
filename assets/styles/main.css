@@ -97,3 +97,39 @@ body {
     flex: 5;
     /* padding: 10px 24px; */
 }
+
+.expense-section-responsive{
+    display: none
+}
+
+@media (max-width: 960px) {
+    .index-main{
+        flex-direction: column-reverse;
+        justify-content: space-around;
+    }
+
+    .expenses-and-goals-section {
+        display: none;
+    }
+
+    .main-section_left{
+        display: flex;
+        column-gap: 2vh;
+        font-size: 0.7rem;
+        flex-direction: row;
+        height: 341px;
+    }
+
+    .expense-section-responsive{
+        display: block
+    }
+    .bills-section-responsive{
+        display: none
+    }
+
+    .income-section-responsive{
+        flex: 1.6
+    }
+
+    
+}

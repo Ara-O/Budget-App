@@ -1,8 +1,9 @@
 <template>
   <main class="index-main" v-if="userIsSignedIn">
     <section class="main-section_left">
-      <income-section></income-section>
-      <bill-section></bill-section>
+      <income-section class="income-section-responsive"></income-section>
+      <bill-section class="bills-section-responsive"></bill-section>
+      <expenses-section class="expense-section-responsive"></expenses-section>
       <!-- <section class="total-income-section">
         <h3 class="title">TOTAL INCOME</h3>
       </section> -->

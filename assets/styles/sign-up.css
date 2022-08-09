@@ -1,4 +1,4 @@
-body{
+body {
     background: white;
     height: 100vh;
     display: flex;
@@ -14,7 +14,7 @@ html {
     overflow: hidden;
 }
 
-.reset-body{
+.reset-body {
     margin: 0px;
 }
 
@@ -41,14 +41,14 @@ html {
 
 }
 
-.stacked-coin{
+.stacked-coin {
     position: absolute;
     left: 142px;
     width: 480px;
     bottom: -49px;
 }
 
-.coin-1{
+.coin-1 {
     position: absolute;
     width: 150px;
     left: 43px;
@@ -56,14 +56,14 @@ html {
     transform: rotate(337deg);
 }
 
-.coin-2{
+.coin-2 {
     position: absolute;
     right: 104px;
     width: 121px;
     bottom: -55px;
 }
 
-.signup-section{
+.signup-section {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -78,11 +78,12 @@ html {
     font-size: 15px
 }
 
-.signup-section_title{
+.signup-section_title {
     font-size: 32px;
     font-weight: 500;
 }
-.form-input{
+
+.form-input {
     height: 38px;
     width: 313px;
     border-radius: 5px;
@@ -91,14 +92,14 @@ html {
     font-family: 'Poppins';
 }
 
-.already-have-account{
+.already-have-account {
     text-decoration: underline;
     font-weight: 300;
     cursor: pointer;
     color: white
 }
 
-.sign-up-btn{
+.sign-up-btn {
     background-color: #203D2A;
     border: none;
     height: 46px;
@@ -114,9 +115,67 @@ html {
     z-index: 2;
 }
 
-.sign-up-btn:hover{
+.sign-up-btn:hover {
     background-color: #1b3223;
 }
+
 /* 
 .sign-up-enter-active, .sign-up-leave-active { transition: all 350ms; }
 .sign-up-enter, .sign-up-leave-active { opacity: 0.9; filter: blur(3px); } */
+
+@media (max-width: 1385px) {
+    .main-section {
+        width: 87%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .stacked-coin {
+        display: none;
+    }
+
+    .signup-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+        z-index: 2;
+    }
+
+    .main-section {
+        justify-content: center
+    }
+
+}
+
+@media (max-width: 937px) {
+    .coin-1 {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .coin-2 {
+        display: none;
+    }
+
+    .signup-section_title {
+        font-size: 27px
+    }
+
+    .form-input {
+        width: 255px
+    }
+}
+
+@media (max-width: 500px) {
+    .signup-section_title {
+        font-size: 23px
+    }
+
+    .form-input {
+        height: 30px;
+        width: 201px;
+    }
+}

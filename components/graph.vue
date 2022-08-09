@@ -156,7 +156,7 @@ export default {
           }
         }
 
-        _this.netEarnings = _this.netEarnings.toFixed(2)
+        _this.netEarnings = _this.netEarnings.toFixed(2);
       });
     },
   },
@@ -264,5 +264,11 @@ export default {
 .fade-in-enter-from,
 .fade-in-leave-to {
   opacity: 0;
+}
+
+@media (max-width: 960px) {
+  .available-data-button:nth-child(2) {
+    display: none;
+  }
 }
 </style>

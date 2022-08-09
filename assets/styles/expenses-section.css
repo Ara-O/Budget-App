@@ -226,3 +226,18 @@
       opacity: 0;
       transform: translateX(30px);
   }
+
+@media (max-width: 900px) {
+  .add-expense div input{
+    width: 65px;
+  }
+
+  .expense-type{
+    width: 80px
+  }
+
+  .add-expense{
+    width: 88%
+  }
+
+}

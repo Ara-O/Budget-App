@@ -209,4 +209,14 @@ export default {
 
 <style scoped>
 @import url("../assets/styles/expenses-section.css");
+
+@media (max-width: 960px){
+.expenses-section_title_date{
+  display: none
+}
+
+.expenses-item-date{
+  display: none
+}
+};
 </style>
