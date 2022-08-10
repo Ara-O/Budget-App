@@ -65,7 +65,8 @@ body {
 
 .graph-section {
     height: 100%;
-    flex: 4.7
+    flex: 4.7;
+    overflow: auto;
 }
 
 
@@ -102,6 +103,14 @@ body {
     display: none
 }
 
+.main-section_mobile{
+    display: none;
+}
+
+.main-section_mobile_footer h4{
+    cursor: pointer;
+}
+
 @media (max-width: 960px) {
     .index-main{
         flex-direction: column-reverse;
@@ -132,4 +141,48 @@ body {
     }
 
     
+}
+
+.main-section_mobile_footer{
+    width: 100vw;
+    background: #468C5F;
+    height: 55px;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: space-evenly;
+    color: white;
+}
+
+.main-section_mobile_footer h4{
+    font-weight: 300;
+    font-size: 14px
+}
+
+.add-income_mobile{
+    background-color: white;
+    box-shadow: -1px 1px 1px #e3e3e3, 1px -1px 2px #e7e7e782;
+    border-radius: 7px;
+    width: 62vw
+}
+
+@media (max-width: 750px) {
+        .index-main{
+            justify-content: flex-end;
+        }
+    .graph-block{
+        display: none
+    }
+
+    html{
+        padding: 0px;
+    }
+
+    .main-section_left, .main-section_right{
+        display: none;
+    }
+
+    .main-section_mobile{
+        display: block;
+    }
 }

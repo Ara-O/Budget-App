@@ -9,18 +9,36 @@
       </section> -->
     </section>
     <section class="main-section_right">
-      <graph></graph>
+      <graph class="graph-block"></graph>
       <div class="expenses-and-goals-section">
         <expenses-section> </expenses-section>
         <user-goals></user-goals>
       </div>
     </section>
+    <section class="main-section_mobile">
+      <component :is="mobileComponent"></component>
+      <!-- <income-section-mobile></income-section-mobile>      -->
+      <footer class="main-section_mobile_footer">
+        <h4 @click="mobileComponent = 'income_mobile'">Income</h4>
+        <h4 @click="mobileComponent = 'expense_mobile'">Expenses</h4>
+        <h4 @click="mobileComponent = 'bill_mobile'">Bills</h4>
+      </footer>
+    </section>
   </main>
+  
 </template>
 
 <script>
 import { userIsSignedIn, setUpFirebase } from "../modules/firebaseServices.js";
+import incomeMobile from "../components/incomeSectionMobile.vue"
+import expenseMobile from "../components/expenseSectionMobile.vue"
+import billMobile from "../components/billSectionMobile.vue"
 export default{
+  components: {
+      income_mobile: incomeMobile,
+      bill_mobile: billMobile,
+      expense_mobile: expenseMobile,
+  },
   head() {
     return {
       title: "Save Money!",
@@ -29,6 +47,7 @@ export default{
   data() {
     return {
       userIsSignedIn: false,
+      mobileComponent: 'income_mobile'
     };
   },
   mounted() {
@@ -60,5 +79,11 @@ html {
 
 body {
   margin: 0px !important
+}
+
+@media (max-width: 750px) {
+    html{
+        padding: 0px;
+    }
 }
 </style> 

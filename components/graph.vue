@@ -270,5 +270,9 @@ export default {
   .available-data-button:nth-child(2) {
     display: none;
   }
+
+  .total-income{
+    width: 141px
+  }
 }
 </style>
