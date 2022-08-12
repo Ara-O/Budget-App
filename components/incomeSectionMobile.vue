@@ -30,21 +30,15 @@
         <h4>From</h4>
         <h4>Amount</h4>
       </article>
+          <div class="income-section_line"></div>
+
 
       <!-- LIST INCOME SOURCES -->
 
       <!-- <TransitionGroup tag="div" name="income-list" class="income-list-wrapper"> -->
       <div v-for="(income, index) in incomeList" :key="income.key">
+          <div class="income-section_line"></div>
         <article class="income-section_header">
-          <Transition name="slide-in">
-            <img
-              src="../assets/images/remove-icon.png"
-              alt="Remove icon"
-              class="remove-income-btn"
-              v-show="editingIncome"
-              @click="removeIncome(income)"
-            />
-          </Transition>
           <h4
             :class="{ 'editing-income-transform': editingIncome }"
             class="income-source"
@@ -53,6 +47,7 @@
           </h4>
           <h4>${{ income.incomeAmount }}</h4>
         </article>
+            <div class="income-section_line"></div>
       </div>
       <br /><br />
       <!-- </TransitionGroup> -->
@@ -204,6 +199,13 @@ export default Vue.extend({
 .income-section_mobile_header_title h4 {
   font-weight: 500;
 }
+
+.income-section_line {
+  height: 0.1px;
+  background: lightgray;
+}
+
+
 .income_mobile_list {
   width: 62vw;
   min-width: 410px;
