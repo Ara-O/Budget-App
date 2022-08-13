@@ -33,6 +33,7 @@ input:focus{
   justify-content: space-between;
   position: absolute;
   bottom: 27px;
+  width: 78%;
 }
 
 .add-income label {

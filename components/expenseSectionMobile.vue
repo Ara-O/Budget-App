@@ -15,7 +15,6 @@
         <div>
           <label for="input-expense">Type: </label>
           <br />
-          <!-- <input type="text" name="" id="input-expense"> -->
           <select
             name=""
             id="expense-type"
@@ -45,27 +44,27 @@
       </article>
     </section>
     <br /><br />
-    <section class="income_mobile_list">
+    <section class="expense_mobile_list">
       <br />
-      <h3 class="income_mobile_list_title">EXPENSE</h3>
-      <article class="income-section_mobile_header_title">
+      <h3 class="expense_mobile_list_title">EXPENSE</h3>
+      <article class="expense-section_mobile_header_title">
         <h4>From</h4>
         <h4>Amount</h4>
       </article>
-      <div class="income-section_line"></div>
+      <div class="expense-section_line"></div>
 
       <!-- LIST EXPENSE SOURCES -->
 
-      <!-- <TransitionGroup tag="div" name="income-list" class="income-list-wrapper"> -->
+      <!-- <TransitionGroup tag="div" name="expense-list" class="expense-list-wrapper"> -->
       <div v-for="(expense, index) in expensesList" :key="expense.key">
-        <div class="income-section_line"></div>
-        <article class="income-section_header">
+        <div class="expense-section_line"></div>
+        <article class="expense-section_header">
             <!-- <div class="expense-item-wrapper"> -->
               <h4 class="expenses-item-descr">{{ expense.expenseSource }}</h4>
               <h4 class="expenses-item-amount">${{ expense.expenseAmount }}</h4>
             <!-- </div> -->
         </article>
-          <div class="income-section_line"></div>
+          <div class="expense-section_line"></div>
       </div>
 
       <br /><br />
@@ -134,9 +133,9 @@ export default {
 
     loadExpenses() {
       const db = getDatabase();
-      const incomeDataRef = ref(db, "users/" + this.getUserID + "/expenses");
+      const expenseDataRef = ref(db, "users/" + this.getUserID + "/expenses");
       let _this = this;
-      onValue(incomeDataRef, (snapshot) => {
+      onValue(expenseDataRef, (snapshot) => {
         this.expensesList = [];
         const data = snapshot.val();
         for (const key in data) {
@@ -181,7 +180,9 @@ export default {
   border: 0px;
   border-bottom: solid 1px gray;
   width: 87px;
+  font-size: 12px
 }
+
 .add-expense_mobile_wrapper {
   display: flex;
   align-items: center;
@@ -190,28 +191,28 @@ export default {
   height: 78vh;
 }
 
-.income_mobile_list_title {
+.expense_mobile_list_title {
   text-align: center;
   font-weight: 500;
   font-size: 15px;
 }
 
-.income-section_mobile_header_title {
+.expense-section_mobile_header_title {
   display: flex;
   justify-content: space-between;
   font-size: 13px;
 }
 
-.income-section_mobile_header_title h4 {
+.expense-section_mobile_header_title h4 {
   font-weight: 500;
 }
 
-.income-section_line {
+.expense-section_line {
   height: 0.1px;
   background: lightgray;
 }
 
-.income_mobile_list {
+.expense_mobile_list {
   width: 62vw;
   min-width: 410px;
   background: white;
@@ -229,6 +230,7 @@ export default {
   border-radius: 7px;
   width: 62vw;
   min-width: 410px;
+  margin-top: 33px
 }
 
 .add-expense {
@@ -301,19 +303,19 @@ export default {
   width: 15px;
 }
 
-article.income-section_header {
+article.expense-section_header {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
 }
 
-article.income-section_header h4 {
+article.expense-section_header h4 {
   font-weight: 400;
 }
 
 @media (max-width: 450px) {
   .add-expense_mobile,
-  .income_mobile_list {
+  .expense_mobile_list {
     width: 330px;
     min-width: 330px;
   }
