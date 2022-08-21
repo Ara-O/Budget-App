@@ -261,7 +261,7 @@ export default {
   transition: opacity 0.5s ease;
 }
 
-.fade-in-enter-from,
+.fade-in-enter,
 .fade-in-leave-to {
   opacity: 0;
 }

@@ -81,7 +81,6 @@ input:focus {
     display: flex;
     align-items: center;
     cursor: pointer;
-    position: absolute;
     right: -6px;
     transition: background-color 250ms linear, color 250ms linear;
 }
